@@ -1,28 +1,25 @@
 <template>
   <div id="#app">
-    <el-row>
-			<el-col :span="3">
-				<p>fuga</p>
-			</el-col>
-      <el-col :xs="21" :md="7" :sm="11">
+    <div class="row">
+      <div class="col-xs-12 col-md-4 col-sm-6">
 				<time-line></time-line>
-      </el-col>
-      <el-col :xs="0" :md="7" :sm="10">
+      </div>
+      <div class="col-xs-0 col-md-4 col-sm-6">
 				<time-line></time-line>
-      </el-col>
-      <el-col :xs="0" :md="7" :sm="0">
+      </div>
+      <div class="col-xs-0 col-md-4 col-sm-0">
 				<time-line></time-line>
-      </el-col>
-    </el-row>
+      </div>
+    </div>
   </div>
 </template>
 
 <script>
-	import TimeLine from 'renderer/components/TimeLine'
-export default {
-	  components: {
-	    TimeLine
-	  }
+  import TimeLine from 'renderer/components/TimeLine'
+  export default {
+    components: {
+      TimeLine
+    }
 }
 </script>
 
