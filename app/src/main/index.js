@@ -1,7 +1,6 @@
 'use strict'
 
 import { app, BrowserWindow } from 'electron'
-const dialog = require('electron').dialog
 const storage = require('electron-json-storage')
 const OAuthTwitter = require('electron-oauth-twitter')
 
