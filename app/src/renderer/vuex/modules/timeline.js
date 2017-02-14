@@ -10,7 +10,7 @@ const getters = {
 
 const mutations = {
   [types.PUSH_TIMELINE] (state, { tweet }) {
-    state.timeline.push(tweet)
+    state.timeline.unshift(tweet)
   }
 }
 const actions = {

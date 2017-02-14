@@ -19,7 +19,6 @@
 <script>
 import Tweet from './Tweet'
 import { mapGetters } from 'vuex'
-
 export default {
   computed: {
     ...mapGetters(['tweets'])

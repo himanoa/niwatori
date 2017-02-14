@@ -9,12 +9,15 @@ const twitterOAuthKey = {
   key: 'ywUCMm8rXhfKQoCcplDTM8lFW',
   secret: 'hooQ3wY1pg66cLMxqj6LowSlnOlNjapWSWIUD8vI2NOEgf7wKq'
 }
+console.dir(storage)
 storage.get('twitterOAuth', function (error, data) {
   if (error) throw error
   if (Object.keys(data).length === 0) {
     let twitter = new OAuthTwitter(twitterOAuthKey)
     twitter.startRequest().then(result => {
       const auth = {
+        consumerKey: twitterOAuthKey.key,
+        consumerSecret: twitterOAuthKey.secret,
         accessToken: result.oauth_access_token,
         accessTokenSecret: result.oauth_access_token_secret
       }
