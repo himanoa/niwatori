@@ -14,8 +14,8 @@ const mutations = {
   }
 }
 const actions = {
-  add ({ dispatch }, tweet) {
-    dispatch(types.PUSH_TIMELINE, { tweet: tweet })
+  add ({ commit }, tweet) {
+    commit(types.PUSH_TIMELINE, { tweet: tweet })
   }
 }
 

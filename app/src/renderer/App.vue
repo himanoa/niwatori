@@ -21,6 +21,7 @@
   import SideBar from 'renderer/components/SideBar'
   import store from 'renderer/vuex/store'
   import TwitterApi from 'renderer/api/twitter'
+  import * as types from 'renderer/vuex/mutation-types'
   const electron = require('electron')
   const storage = electron.remote.require('electron-json-storage')
   new Promise((resolve, reject) => {
@@ -38,7 +39,7 @@
     client.startUserStreaming((data) => {
       if (data['created_at']) {
         console.dir(data)
-        store.commit('PUSH_TIMELINE', {tweet: data})
+        store.commit(types.PUSH_TIMELINE, {tweet: data})
       }
     })
   })
