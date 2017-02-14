@@ -2,7 +2,7 @@
 	<div class="timeline">
 		<el-card class="box-card">
       <div class="tweets">
-        <tweet v-for="x in 200"></tweet>
+        <tweet v-for="tweet in tweets" :tweet="tweet"></tweet>
       </div>
 		</el-card>
 	</div>
@@ -18,7 +18,12 @@
 </style>
 <script>
 import Tweet from './Tweet'
+import { mapGetters } from 'vuex'
+
 export default {
+  computed: {
+    ...mapGetters(['tweets'])
+  },
   components: {
     Tweet
   }
