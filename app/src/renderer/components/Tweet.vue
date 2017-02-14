@@ -1,5 +1,5 @@
 <template>
-  <el-card>
+  <div class="tweet">
     <el-row :gutter="10">
       <el-col :span="5">
         <img src="https://s.gravatar.com/avatar/390f0177c1ed7a9b4f3eaa4555e80e19?s=80" style="width:100%;">
@@ -14,10 +14,14 @@
         </div>
       </el-col>
     </el-row>
-  </el-card>
+  </tweet>
 </template>
 <style scoped>
 * {
 	font-family: Verdana, "游ゴシック", YuGothic, "Hiragino Kaku Gothic ProN", Meiryo, sans-serif;
+}
+.tweet {
+  padding-top: 10px;
+  border-bottom: 1px solid #C6D2DF;
 }
 </style>

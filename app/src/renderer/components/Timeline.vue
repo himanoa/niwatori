@@ -4,10 +4,24 @@
 			<div slot="header">
 				<span style="line-height: 36px;">TimeLine</span>
 			</div>
-			<tweet v-for="x in 10"></tweet>
+      <div class="tweets">
+        <tweet v-for="x in 200"></tweet>
+      </div>
 		</el-card>
 	</div>
 </template>
+<style scoped>
+.timeline {
+  height: 100%;
+}
+.box-card {
+  height: 100%;
+}
+.tweets {
+  height: 80vh;
+  overflow-y: auto;
+}
+</style>
 <script>
 import Tweet from './Tweet'
 export default {
