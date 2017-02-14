@@ -4,7 +4,6 @@ import Resource from 'vue-resource'
 import Router from 'vue-router'
 import ElementUI from 'element-ui'
 import 'element-ui/lib/theme-default/index.css'
-import 'flexboxgrid'
 
 import App from './App'
 import routes from './routes'

@@ -1,32 +1,19 @@
 <template>
 	<div class="timeline">
 		<el-card class="box-card">
-			<div slot="header">
-				<span style="line-height: 36px;">TimeLine</span>
-			</div>
       <div class="tweets">
         <tweet v-for="x in 200"></tweet>
       </div>
 		</el-card>
 	</div>
 </template>
-<style>
-.el-card__body {
-  height: 80%;
-}
-</style>
 <style scoped>
-* {
-}
 .timeline {
-  height: 100%;
-}
-.box-card {
-  height: 100%;
+  height: 88%;
+  overflow-y: auto;
 }
 .tweets {
   height: 100%;
-  overflow-y: auto;
 }
 </style>
 <script>
