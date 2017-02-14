@@ -10,7 +10,14 @@
 		</el-card>
 	</div>
 </template>
+<style>
+.el-card__body {
+  height: 80%;
+}
+</style>
 <style scoped>
+* {
+}
 .timeline {
   height: 100%;
 }
@@ -18,7 +25,7 @@
   height: 100%;
 }
 .tweets {
-  height: 80vh;
+  height: 100%;
   overflow-y: auto;
 }
 </style>
