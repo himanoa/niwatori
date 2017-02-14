@@ -9,15 +9,26 @@ const twitterOAuthKey = {
   key: "ywUCMm8rXhfKQoCcplDTM8lFW",
   secret: "hooQ3wY1pg66cLMxqj6LowSlnOlNjapWSWIUD8vI2NOEgf7wKq"
 }
-
-const twitter = new OAuthTwitter(twitterOAuthKey)
-twitter.startRequest()
-.then((result) => {
-  console.dir(result)
-}).catch(error => new Promise((resolve, reject) => {
-  console.error(error, error.stack);
-}))
-
+storage.get('twitterOAuth', function(error, data){
+  if(error) throw error;
+  if(Object.keys(data).length === 0){
+    let twitter = new OAuthTwitter(twitterOAuthKey)
+    twitter.startRequest().then(result => {
+      const auth = {
+        accessToken: result.oauth_access_token,
+        accessTokenSecret: result.oauth_access_token_secret
+      }
+      storage.set('twitterOAuth', auth, function(err){
+        if(err) throw err
+        createWindow()
+      })
+    }).catch(error => new Promise((resolve, reject) => {
+      console.error(error, error.stack)
+    }))
+  }else {
+    createWindow()
+  }
+})
 
 const winURL = process.env.NODE_ENV === 'development'
   ? `http://localhost:${require('../../../config').port}`
@@ -42,8 +53,6 @@ function createWindow () {
   // eslint-disable-next-line no-console
   console.log('mainWindow opened')
 }
-
-app.on('ready', createWindow)
 
 app.on('window-all-closed', () => {
   if (process.platform !== 'darwin') {
