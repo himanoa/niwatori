@@ -35,6 +35,7 @@
     padding: 0;
     height: 100%;
     overflow-y: hidden;
+    font-family: Verdana,  "Hiragino Kaku Gothic ProN", Meiryo, sans-serif;
   }
 </style>
 <style scoped>

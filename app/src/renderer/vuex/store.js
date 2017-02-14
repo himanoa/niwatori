@@ -1,15 +1,18 @@
 import Vue from 'vue'
 import Vuex from 'vuex'
 
-import * as actions from './actions'
-import * as getters from './getters'
-import modules from './modules'
-
 Vue.use(Vuex)
 
+let state = {
+  currentTweet: ''
+}
+let actions = {}
+let mutations = {}
+let getters = {}
+
 export default new Vuex.Store({
-  actions,
+  state,
   getters,
-  modules,
-  strict: true
+  actions,
+  mutations
 })
