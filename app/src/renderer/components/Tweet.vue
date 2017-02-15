@@ -11,10 +11,12 @@
         <el-row v-if="tweet['retweeted_status']">
           <strong class="retweeted">{{tweet['retweeted_status']['user']['name']}}</strong>
           <span class="retweeted">@{{tweet['retweeted_status']['user']['screen_name']}}</span>
+          <span class="retweeted"> {{new Date(tweet['retweeted_status']['created_at']).toLocaleDateString() + ' ' + new Date(tweet['retweeted_status']['created_at']).toLocaleTimeString()}}</span>
         </el-row>
         <el-row v-else>
           <strong>{{tweet['user']['name']}}</strong>
           <span>@{{tweet['user']['screen_name']}}</span>
+          <span> {{new Date(tweet['created_at']).toLocaleDateString() + ' ' + new Date(tweet['created_at']).toLocaleTimeString()}}</span>
         </el-row>
         <el-row>
           <p class="retweeted" v-if="tweet['retweeted_status']"style="width: 100%;">{{tweet['retweeted_status']['text']}}</p>
