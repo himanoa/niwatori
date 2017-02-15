@@ -1,1 +1,2 @@
 export const PUSH_TIMELINE = 'PUSH_TIMELINE'
+export const CLICKED_TWEET = 'CLICKED_TWEET'
