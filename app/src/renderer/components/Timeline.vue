@@ -10,7 +10,7 @@
 <style scoped>
 .timeline {
   height: 88%;
-  overflow-y: auto;
+  overflow-y: scroll;
 }
 .tweets {
   height: 100%;
