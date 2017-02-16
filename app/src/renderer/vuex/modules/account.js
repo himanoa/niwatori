@@ -6,12 +6,13 @@ const state = {
 }
 
 const getters = {
-  accounts: state => state.accounts
+  accounts: state => state.clients,
+  current: state => state.clients[0]
 }
 
 const mutations = {
   [types.ADD_ACCOUNT] (state, { client }) {
-    state.accounts.push(client)
+    state.clients.push(client)
   }
 }
 
@@ -23,12 +24,27 @@ const actions = {
       accessToken: account.accessToken,
       accessTokenSecret: account.accessTokenSecret
     })
+    console.dir(client)
     client.startUserStreaming((data) => {
       if (data['created_at']) {
         state.commit(types.PUSH_TIMELINE, {tweet: data})
       }
     })
     state.commit(types.ADD_ACCOUNT, {client: client})
+  },
+  [types.FAVORITE] ({ commit, state }, args) {
+    args['account'].favorite(args['idStr']).then(() => {
+      commit(types.FAVORITE, {index: args['index']})
+    }).catch(err => {
+      console.error(err, err.stack)
+    })
+  },
+  [types.RETWEET] ({ commit, state }, args) {
+    args['account'].retweet(args['idStr']).then(() => {
+      commit(types.RETWEET, {index: args['index']})
+    }).catch(err => {
+      console.error(err, err.stack)
+    })
   }
 }
 

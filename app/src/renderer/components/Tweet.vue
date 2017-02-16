@@ -25,6 +25,10 @@
         <el-row v-if="tweet['retweeted_status']">
           <p class="retweeted">retweeted by <img class="icon" style="height: 30px;":src="tweet['user']['profile_image_url_https']">@{{tweet['user']['screen_name']}}</p>
         </el-row>
+        <el-row>
+          <tweet-actions v-if="tweet['retweeted_status']" :tweet="tweet['retweeted_status']" :index="index"></tweet-actions>
+          <tweet-actions v-else :tweet="tweet" :index="index"></tweet-actions>
+        </el-row>
       </el-col>
     </el-row>
   </tweet>
@@ -55,17 +59,26 @@ p {
 }
 </style>
 <script>
+import TweetActions from './TweetActions'
 import { mapGetters, mapActions } from 'vuex'
 export default {
   computed: {
     ...mapGetters(['selectedTweet'])
   },
   methods: {
-    ...mapActions(['CLICKED_TWEET'])
+    ...mapActions(['CLICKED_TWEET']),
+    debug: (a, t, i) => {
+      console.dir(a)
+      console.dir(t)
+      console.dir(i)
+    }
   },
   props: {
     tweet: Object,
     index: Number
+  },
+  components: {
+    TweetActions
   }
 }
 </script>

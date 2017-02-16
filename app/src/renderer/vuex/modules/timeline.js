@@ -27,6 +27,20 @@ const mutations = {
     if (state.selectedTweet !== null) {
       state.selectedTweet++
     }
+  },
+  [types.RETWEET] (state, {index}) {
+    if (state.timeline[index]['retweeted_status']) {
+      state.timeline[index]['retweeted_status']['retweeted'] = true
+    } else {
+      state.timeline[index]['retweeted'] = true
+    }
+  },
+  [types.FAVORITE] (state, {index}) {
+    if (state.timeline[index]['retweeted_status']) {
+      state.timeline[index]['retweeted_status']['favorited'] = true
+    } else {
+      state.timeline[index]['favorited'] = true
+    }
   }
 }
 const actions = {
