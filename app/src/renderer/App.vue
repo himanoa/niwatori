@@ -20,7 +20,6 @@
   import TimeLine from 'renderer/components/TimeLine'
   import SideBar from 'renderer/components/SideBar'
   import store from 'renderer/vuex/store'
-  import TwitterApi from 'renderer/api/twitter'
   import * as types from 'renderer/vuex/mutation-types'
   const electron = require('electron')
   const storage = electron.remote.require('electron-json-storage')
@@ -30,18 +29,7 @@
       resolve(data)
     })
   }).then(data => {
-    const client = new TwitterApi.TwitterApi({
-      consumerKey: data.consumerKey,
-      consumerSecret: data.consumerSecret,
-      accessToken: data.accessToken,
-      accessTokenSecret: data.accessTokenSecret
-    })
-    client.startUserStreaming((data) => {
-      if (data['created_at']) {
-        console.dir(data)
-        store.commit(types.PUSH_TIMELINE, {tweet: data})
-      }
-    })
+    store.dispatch(types.ADD_ACCOUNT, {account: data})
   })
   export default {
     store,

@@ -9,6 +9,12 @@ class TwitterApi {
       access_token_secret: key.accessTokenSecret
     })
   }
+  retweeted (idStr) {
+    return this.client.post(`statuses/retweet/${idStr}`, {})
+  }
+  favorite (idStr) {
+    return this.client.post('statuses/favorite', {id: idStr})
+  }
   startUserStreaming (callback) {
     this.client.stream('user', stream => {
       stream.on('data', data => {
