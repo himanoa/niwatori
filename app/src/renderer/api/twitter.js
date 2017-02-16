@@ -9,6 +9,9 @@ class TwitterApi {
       access_token_secret: key.accessTokenSecret
     })
   }
+  updateStatus (status) {
+    return this.client.post('statuses/update', {status: status.status})
+  }
   retweet (idStr) {
     return this.client.post(`statuses/retweet/${idStr}`, {})
   }

@@ -12,4 +12,7 @@
 <script>
 </script>
 <style scoped>
+.el-menu {
+  height: 100%;
+}
 </style>

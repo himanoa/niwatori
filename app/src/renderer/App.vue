@@ -5,12 +5,12 @@
 				<side-bar></side-bar>
       </el-col>
       <el-col :span="18">
-        <div class="new">
-          <p>fugafuga</p>
-        </div>
-        <div>
+        <el-row class="new">
+          <new-tweet class="new"></new-tweet>
+        </el-row>
+        <el-row>
           <time-line></time-line>
-        </div>
+        </el-row>
       </el-col>
     </el-row>
   </div>
@@ -19,6 +19,7 @@
 <script>
   import TimeLine from 'renderer/components/TimeLine'
   import SideBar from 'renderer/components/SideBar'
+  import NewTweet from 'renderer/components/NewTweet'
   import store from 'renderer/vuex/store'
   import * as types from 'renderer/vuex/mutation-types'
   const electron = require('electron')
@@ -34,6 +35,7 @@
   export default {
     store,
     components: {
+      NewTweet,
       TimeLine,
       SideBar
     }
@@ -53,8 +55,7 @@
 <style scoped>
   .new {
     width: 100%;
-    max-height: 10%;
-    height: 10%;
+    height: auto !important;
   }
   * {
     height: 100%;
