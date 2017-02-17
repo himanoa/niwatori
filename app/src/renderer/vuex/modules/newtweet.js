@@ -1,12 +1,13 @@
 import * as types from '../mutation-types'
 import * as urlRegex from 'url-regex'
 const state = {
-  input: ''
+  input: '',
+  replyTargetTweet: null
 }
 
 const getters = {
   input: state => state.input,
-  input_length: state => {
+  inputLength: state => {
     return 140 - state.input.replace(urlRegex(), 'aaaaaaaaaaaaaaaaaaaaaaa').length
   }
 }

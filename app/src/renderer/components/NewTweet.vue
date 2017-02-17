@@ -5,7 +5,7 @@
     </el-row>
     <el-row>
       <el-button type="primary" v-on:click="UPDATE_STATUS({ account: current, status:input })">ツイート</el-button>
-      <span>{{ input_length }}</span>
+      <span>{{ inputLength }}</span>
     </el-row>
   </div>
 </template>
@@ -22,7 +22,7 @@ import * as types from '../vuex/mutation-types'
 import { mapGetters, mapActions } from 'vuex'
 export default {
   computed: {
-    ...mapGetters(['current', 'input', 'input_length'])
+    ...mapGetters(['current', 'input', 'inputLength'])
   },
   methods: {
     ...mapActions([types.UPDATE_STATUS, types.UPDATE_INPUT])
