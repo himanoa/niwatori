@@ -1,12 +1,14 @@
 import * as types from '../mutation-types'
-
+import * as urlRegex from 'url-regex'
 const state = {
   input: ''
 }
 
 const getters = {
   input: state => state.input,
-  input_length: state => 140 - state.input.length
+  input_length: state => {
+    return 140 - state.input.replace(urlRegex(), 'aaaaaaaaaaaaaaaaaaaaaaa').length
+  }
 }
 
 const mutations = {
