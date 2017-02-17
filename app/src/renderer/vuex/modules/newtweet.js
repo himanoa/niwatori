@@ -25,7 +25,7 @@ const mutations = {
   [types.REPLY] (state, { targetReply }) {
     state.replyTargetTweet = targetReply
     // ex. "@h1manoa @h2manoa @h3manoa I am a @niwatori_dev." -> "@h1manoa @h2manoa @h3manoa @niwatori_dev"
-    const replyTargets = `@${state.replyTargetTweet['user']['screen_name']} ${state.replyTargetTweet['text']}`.match(/@[a-zA-Z0-9_]{1,15}/g).join(' ')
+    const replyTargets = `@${state.replyTargetTweet['user']['screen_name']} `
     state.input = `${replyTargets} ${state.input}`
   }
 }
