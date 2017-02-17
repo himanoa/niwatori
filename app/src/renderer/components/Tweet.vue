@@ -62,7 +62,7 @@ p {
 import TweetActions from './TweetActions'
 import { mapGetters, mapActions } from 'vuex'
 export default {
-  jomputed: {
+  computed: {
     ...mapGetters(['selectedTweet'])
   },
   methods: {
