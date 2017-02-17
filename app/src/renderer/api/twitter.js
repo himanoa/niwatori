@@ -10,7 +10,8 @@ class TwitterApi {
     })
   }
   updateStatus (status) {
-    return this.client.post('statuses/update', {status: status.status})
+    console.dir(status)
+    return this.client.post('statuses/update', status)
   }
   retweet (idStr) {
     return this.client.post(`statuses/retweet/${idStr}`, {})

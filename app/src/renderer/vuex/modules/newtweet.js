@@ -2,7 +2,9 @@ import * as types from '../mutation-types'
 import * as urlRegex from 'url-regex'
 const state = {
   input: '',
-  replyTargetTweet: undefined
+  replyTargetTweet: {
+    id_str: ''
+  }
 }
 
 const getters = {
@@ -34,7 +36,7 @@ const actions = {
       'status': args['status'],
       'in_reply_to_status_id': args['target']['id_str'] || undefined
     }
-    console.dir(args)
+    console.dir(param)
     args['account'].updateStatus(param).then(() => {
       commit(types.UPDATE_STATUS)
     }).catch(err => {
