@@ -4,7 +4,7 @@
       <el-input :value="input" @input.self="UPDATE_INPUT" type="textarea" :row="4" placeholder="今何してる？"></el-input>
     </el-row>
     <el-row>
-      <el-button type="primary" v-on:click="UPDATE_STATUS({ account: current, status:input })">ツイート</el-button>
+      <el-button type="primary" v-on:click="UPDATE_STATUS({ account: current, status:input, target: replyTargetTweet })">ツイート</el-button>
       <span>{{ inputLength }}</span>
     </el-row>
   </div>
@@ -22,7 +22,7 @@ import * as types from '../vuex/mutation-types'
 import { mapGetters, mapActions } from 'vuex'
 export default {
   computed: {
-    ...mapGetters(['current', 'input', 'inputLength'])
+    ...mapGetters(['current', 'input', 'inputLength', 'replyTargetTweet'])
   },
   methods: {
     ...mapActions([types.UPDATE_STATUS, types.UPDATE_INPUT])
