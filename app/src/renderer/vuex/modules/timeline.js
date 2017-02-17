@@ -6,7 +6,7 @@ const state = {
 }
 
 const getters = {
-  tweets: state => state.timeline,
+  tweets: state => state.timeline.slice(0, 100).reverse(),
   selectedTweet: state => state.selectedTweet
 }
 
@@ -15,10 +15,7 @@ const mutations = {
     if (state.selectedTweet !== null) {
       state.selectedTweet++
     }
-    state.timeline.unshift(tweet)
-    if (state.timeline.length > 100) {
-      state.timeline.pop()
-    }
+    state.timeline.push(tweet)
   },
   [types.CLICKED_TWEET] (state, { num }) {
     state.selectedTweet = num
@@ -29,17 +26,17 @@ const mutations = {
     }
   },
   [types.RETWEET] (state, {index}) {
-    if (state.timeline[index]['retweeted_status']) {
-      state.timeline[index]['retweeted_status']['retweeted'] = true
+    if (state.timeline[index + 1]['retweeted_status']) {
+      state.timeline[index + 1]['retweeted_status']['retweeted'] = true
     } else {
-      state.timeline[index]['retweeted'] = true
+      state.timeline[index + 1]['retweeted'] = true
     }
   },
   [types.FAVORITE] (state, {index}) {
-    if (state.timeline[index]['retweeted_status']) {
-      state.timeline[index]['retweeted_status']['favorited'] = true
+    if (state.timeline[index + 1]['retweeted_status']) {
+      state.timeline[index + 1]['retweeted_status']['favorited'] = true
     } else {
-      state.timeline[index]['favorited'] = true
+      state.timeline[index + 1]['favorited'] = true
     }
   }
 }

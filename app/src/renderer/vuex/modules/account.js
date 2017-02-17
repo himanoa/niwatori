@@ -34,14 +34,12 @@ const actions = {
   },
   [types.FAVORITE] ({ commit, state }, args) {
     args['account'].favorite(args['idStr']).then(() => {
-      commit(types.FAVORITE, {index: args['index']})
     }).catch(err => {
       console.error(err, err.stack)
     })
   },
   [types.RETWEET] ({ commit, state }, args) {
     args['account'].retweet(args['idStr']).then(() => {
-      commit(types.RETWEET, {index: args['index']})
     }).catch(err => {
       console.error(err, err.stack)
     })
