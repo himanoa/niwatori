@@ -9,7 +9,7 @@
 </template>
 <style scoped>
 .timeline {
-  height: 88%;
+  height: 100%;
   overflow-y: scroll;
 }
 .tweets {

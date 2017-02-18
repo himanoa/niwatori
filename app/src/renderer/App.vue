@@ -8,7 +8,7 @@
         <el-row class="new">
           <new-tweet class="new"></new-tweet>
         </el-row>
-        <el-row>
+        <el-row class="timeline">
           <time-line></time-line>
         </el-row>
       </el-col>
@@ -61,6 +61,9 @@
     height: 100%;
     margin: 0;
     padding: 0;
+  }
+  .timeline {
+    height: calc(100% - 120px)
   }
   p { text-align: center; }
 </style>
