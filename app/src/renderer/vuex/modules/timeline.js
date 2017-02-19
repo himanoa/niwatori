@@ -6,7 +6,7 @@ const state = {
 }
 
 const getters = {
-  tweets: state => state.timeline.slice(0, 100).reverse(),
+  tweets: state => state.timeline.slice().reverse().slice(0, 100),
   selectedTweet: state => state.selectedTweet
 }
 
