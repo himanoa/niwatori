@@ -1,6 +1,6 @@
 # niwatori
 
-> Twitter Client
+にわとりはパソコン向けに作られたキュートでスタイリッシュでイケてて神でゴッドでfastestで(機能の割に)メモリをたくさん食べるTwitterクライアントだよ。:innocent:
 
 ## Build Setup
 
