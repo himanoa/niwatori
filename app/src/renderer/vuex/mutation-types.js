@@ -10,3 +10,5 @@ export const UPDATE_STATUS = 'UPDATE_STATUS'
 export const UPDATE_INPUT = 'UPDATE_INPUT'
 export const CLEAR_INPUT = 'CLEAR_INPUT'
 export const REPLY = 'REPLY'
+
+export const ATTACH_CONTENTS = 'ATTACH_CONTENTS'

@@ -18,6 +18,12 @@ class TwitterApi {
   favorite (idStr) {
     return this.client.post('favorites/create', {id: idStr})
   }
+  mediaUpload (mediaPath) {
+    console.log(mediaPath)
+    return require('electron').remote.require('fs-promise').readFile(mediaPath).then(data => new Promise(resolve => {
+      resolve(this.client.post('media/upload', { media: data }))
+    }))
+  }
   startUserStreaming (callback) {
     this.client.stream('user', stream => {
       stream.on('data', data => {
