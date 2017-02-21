@@ -27,7 +27,7 @@ const actions = {
     console.dir(client)
     client.startUserStreaming((data) => {
       if (data['created_at']) {
-        state.commit(types.PUSH_TIMELINE, {tweet: data})
+        state.dispatch(types.PUSH_TIMELINE, data)
       }
     })
     state.commit(types.ADD_ACCOUNT, {client: client})

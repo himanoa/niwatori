@@ -1,5 +1,5 @@
 import * as types from '../mutation-types'
-
+import Autolinker from 'autolinker'
 const state = {
   timeline: [],
   selectedTweet: null
@@ -42,6 +42,12 @@ const mutations = {
 }
 const actions = {
   [types.PUSH_TIMELINE] ({ commit, state }, tweet) {
+    const autolinker = new Autolinker({ mention: 'twitter', hashtag: 'twitter' })
+    if (tweet['retweeted_status']) {
+      tweet['retweeted_status']['text'] = autolinker.link(tweet['retweeted_status']['text'])
+    } else {
+      tweet['text'] = autolinker.link(tweet['text'])
+    }
     if (state.selectedTweet !== null) {
       state.dispatch(types.INCREMENTS_TIMELINE_CURRENT_INDEX)
         .then(() => {
