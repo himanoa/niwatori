@@ -17,7 +17,7 @@ const mutations = {
 }
 
 const actions = {
-  [types.ADD_ACCOUNT] (state, {account}) {
+  [types.ADD_ACCOUNT] ({ state, dispatch, commit }, {account}) {
     const client = new TwitterApi.TwitterApi({
       consumerKey: account.consumerKey,
       consumerSecret: account.consumerSecret,
@@ -27,10 +27,10 @@ const actions = {
     console.dir(client)
     client.startUserStreaming((data) => {
       if (data['created_at']) {
-        state.dispatch(types.PUSH_TIMELINE, data)
+        dispatch(types.PUSH_TIMELINE, data)
       }
     })
-    state.commit(types.ADD_ACCOUNT, {client: client})
+    commit(types.ADD_ACCOUNT, {client: client})
   },
   [types.FAVORITE] ({ commit, state }, args) {
     args['account'].favorite(args['idStr']).then(() => {

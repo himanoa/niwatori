@@ -1,4 +1,5 @@
 import * as types from '../mutation-types'
+import escape from 'escape-html'
 import Autolinker from 'autolinker'
 const state = {
   timeline: [],
@@ -41,20 +42,12 @@ const mutations = {
   }
 }
 const actions = {
-  [types.PUSH_TIMELINE] ({ commit, state }, tweet) {
+  [types.PUSH_TIMELINE] ({ dispatch, state, commit }, tweet) {
     const autolinker = new Autolinker({ mention: 'twitter', hashtag: 'twitter' })
     if (tweet['retweeted_status']) {
-      tweet['retweeted_status']['text'] = autolinker.link(tweet['retweeted_status']['text'])
+      tweet['retweeted_status']['text'] = autolinker.link(escape(tweet['retweeted_status']['text']))
     } else {
-      tweet['text'] = autolinker.link(tweet['text'])
-    }
-    if (state.selectedTweet !== null) {
-      state.dispatch(types.INCREMENTS_TIMELINE_CURRENT_INDEX)
-        .then(() => {
-          commit(types.PUSH_TIMELINE, { tweet: tweet })
-        }).catch(err => {
-          console.error(err, err.stack)
-        })
+      tweet['text'] = autolinker.link(escape(tweet['text']))
     }
     commit(types.PUSH_TIMELINE, { tweet: tweet })
   },

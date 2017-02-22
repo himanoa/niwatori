@@ -1,6 +1,6 @@
 'use strict'
 
-import { app, BrowserWindow } from 'electron'
+import { shell, app, BrowserWindow } from 'electron'
 const storage = require('electron-json-storage')
 const OAuthTwitter = require('electron-oauth-twitter')
 
@@ -41,6 +41,7 @@ function createWindow () {
   /**
    * Initial window options
    */
+  if(mainWindow) return
   mainWindow = new BrowserWindow({
     height: 600,
     width: 800
@@ -48,6 +49,10 @@ function createWindow () {
 
   mainWindow.loadURL(winURL)
 
+  mainWindow.webContents.on('new-window', (event, url) => {
+    event.preventDefault()
+    shell.openExternal(url)
+  })
   mainWindow.on('closed', () => {
     mainWindow = null
   })

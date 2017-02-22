@@ -19,8 +19,8 @@
           <span> {{new Date(tweet['created_at']).toLocaleDateString() + ' ' + new Date(tweet['created_at']).toLocaleTimeString()}}</span>
         </el-row>
         <el-row>
-          <p class="retweeted" v-if="tweet['retweeted_status']"style="width: 100%;">{{tweet['retweeted_status']['text']}}</p>
-          <p v-else style="width: 100%;">{{tweet['text']}}</p>
+          <p class="retweeted" v-if="tweet['retweeted_status']"style="width: 100%;" v-html="tweet['retweeted_status']['text']"></p>
+          <p v-else style="width: 100%;" v-html="tweet['text']"></p>
         </el-row>
         <el-row v-if="tweet['retweeted_status']">
           <p class="retweeted">retweeted by <img class="icon" style="height: 30px;":src="tweet['user']['profile_image_url_https']">@{{tweet['user']['screen_name']}}</p>
