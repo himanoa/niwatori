@@ -25,6 +25,13 @@
         <el-row v-if="tweet['retweeted_status']">
           <p class="retweeted">retweeted by <img class="icon" style="height: 30px;":src="tweet['user']['profile_image_url_https']">@{{tweet['user']['screen_name']}}</p>
         </el-row>
+        <el-row v-if="tweet['media_urls'].length > 0">
+          <span v-for="media in tweet['media_urls']">
+            <a :href="media" target="_blank">
+              <img class="attach-image" :src="media"></img>
+            </a>
+          </span>
+        </el-row>
         <el-row>
           <tweet-actions v-if="tweet['retweeted_status']" :tweet="tweet['retweeted_status']" :index="index"></tweet-actions>
           <tweet-actions v-else :tweet="tweet" :index="index"></tweet-actions>
@@ -57,6 +64,11 @@ p {
   padding-top: 10px;
   border-bottom: 1px solid #C6D2DF;
 }
+
+.attach-image {
+  width: 80px;
+  height: 80px;
+}
 </style>
 <script>
 import TweetActions from './TweetActions'
@@ -66,7 +78,10 @@ export default {
     ...mapGetters(['selectedTweet'])
   },
   methods: {
-    ...mapActions(['CLICKED_TWEET'])
+    ...mapActions(['CLICKED_TWEET']),
+    mediaUrls (tweet) {
+      return tweet['media_urls'] || []
+    }
   },
   props: {
     tweet: Object,

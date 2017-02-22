@@ -38,6 +38,7 @@ const mutations = {
 }
 function expandEntities (tweet) {
   const autolinker = new Autolinker({ mention: 'twitter', hashtag: 'twitter' })
+  tweet['media_urls'] = []
   for (const entity of tweet.entities.urls) {
     tweet['text'] = tweet['text'].replace(entity.url, entity.expanded_url)
   }
@@ -47,12 +48,14 @@ function expandEntities (tweet) {
     })
   }
   tweet['text'] = autolinker.link(escape(tweet['text']))
+  console.dir(tweet['media_urls'])
   return tweet
 }
 const actions = {
   [types.PUSH_TIMELINE] ({ state, commit }, tweet) {
     if (tweet['retweeted_status']) {
       tweet['retweeted_status'] = expandEntities(tweet['retweeted_status'])
+      tweet['media_urls'] = tweet['retweeted_status']['media_urls']
     } else {
       tweet = expandEntities(tweet)
     }
