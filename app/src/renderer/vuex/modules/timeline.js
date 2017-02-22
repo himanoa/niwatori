@@ -1,6 +1,6 @@
 import * as types from '../mutation-types'
+import urlRegex from 'url-regex'
 import escape from 'escape-html'
-import Autolinker from 'autolinker'
 const state = {
   timeline: [],
   selectedTweet: null
@@ -37,7 +37,6 @@ const mutations = {
   }
 }
 function expandEntities (tweet) {
-  const autolinker = new Autolinker({ mention: 'twitter', hashtag: 'twitter' })
   tweet['media_urls'] = []
   for (const entity of tweet.entities.urls) {
     tweet['text'] = tweet['text'].replace(entity.url, entity.expanded_url)
@@ -47,7 +46,10 @@ function expandEntities (tweet) {
       return val.media_url_https
     })
   }
-  tweet['text'] = autolinker.link(escape(tweet['text']))
+  tweet['text'] = escape(tweet['text'])
+    .replace(urlRegex(), "<a href='$&' target='_blank'>$&</a>")
+    .replace(/@([a-zA-Z0-9_]{1,15})/, "<a href='https://twitter.com/$1' target='_blank'>$&</a>")
+    .replace(/#([^!"$#%&'()*+\-.,/:;<=>?@[\\\]^`{|}~]+)/, "<a href='https://twitter.com/hashtag/$1' target='_blank'>$&</a>")
   console.dir(tweet['media_urls'])
   return tweet
 }
