@@ -50,7 +50,6 @@ function expandEntities (tweet) {
     .replace(urlRegex(), "<a href='$&' target='_blank'>$&</a>")
     .replace(/@([a-zA-Z0-9_]{1,15})/, "<a href='https://twitter.com/$1' target='_blank'>$&</a>")
     .replace(/#([^!"$#%&'()*+\-.,/:;<=>?@[\\\]^`{|}~]+)/, "<a href='https://twitter.com/hashtag/$1' target='_blank'>$&</a>")
-  console.dir(tweet['media_urls'])
   return tweet
 }
 const actions = {

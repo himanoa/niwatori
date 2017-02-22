@@ -85,6 +85,7 @@
     "electron-json-storage": "^3.0.1",
     "electron-oauth-twitter": "^1.0.1",
     "element-ui": "^1.1.6",
+    "emojinize": "^1.0.0",
     "escape-html": "^1.0.3",
     "flexboxgrid": "^6.3.1",
     "fs-promise": "^2.0.0",

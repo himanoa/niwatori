@@ -2,6 +2,8 @@ const electron = require('electron')
 const {dialog} = electron.remote
 import * as types from '../mutation-types'
 import * as urlRegex from 'url-regex'
+import emojinize from 'emojinize'
+
 const state = {
   input: '',
   replyTargetTweet: {
@@ -47,7 +49,7 @@ const mutations = {
 const actions = {
   [types.UPDATE_STATUS] ({commit}, args) {
     const param = {
-      'status': args['status'],
+      'status': emojinize.encode(args['status']),
       'in_reply_to_status_id': args['target']['id_str'] || undefined,
       'media_ids': args['medias'].toString() || undefined
     }
