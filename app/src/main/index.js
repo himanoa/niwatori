@@ -41,7 +41,7 @@ function createWindow () {
   /**
    * Initial window options
    */
-  if(mainWindow) return
+  if (mainWindow) return
   mainWindow = new BrowserWindow({
     height: 600,
     width: 800

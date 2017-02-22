@@ -45,8 +45,14 @@ const actions = {
   [types.PUSH_TIMELINE] ({ dispatch, state, commit }, tweet) {
     const autolinker = new Autolinker({ mention: 'twitter', hashtag: 'twitter' })
     if (tweet['retweeted_status']) {
+      for (const entity of tweet.retweeted_status.entities.urls) {
+        tweet['retweeted_status']['text'] = tweet['retweeted_status']['text'].replace(entity.url, entity.expanded_url)
+      }
       tweet['retweeted_status']['text'] = autolinker.link(escape(tweet['retweeted_status']['text']))
     } else {
+      for (const entity of tweet.entities.urls) {
+        tweet['text'] = tweet['text'].replace(entity.url, entity.expanded_url)
+      }
       tweet['text'] = autolinker.link(escape(tweet['text']))
     }
     commit(types.PUSH_TIMELINE, { tweet: tweet })
