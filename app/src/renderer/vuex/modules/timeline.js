@@ -21,11 +21,6 @@ const mutations = {
   [types.CLICKED_TWEET] (state, { num }) {
     state.selectedTweet = num
   },
-  [types.INCREMENTS_TIMELINE_CURRENT_INDEX] (state) {
-    if (state.selectedTweet !== null) {
-      state.selectedTweet++
-    }
-  },
   [types.RETWEET] (state, {index}) {
     if (state.timeline[index + 1]['retweeted_status']) {
       state.timeline[index + 1]['retweeted_status']['retweeted'] = true
@@ -41,19 +36,25 @@ const mutations = {
     }
   }
 }
+function expandEntities (tweet) {
+  const autolinker = new Autolinker({ mention: 'twitter', hashtag: 'twitter' })
+  for (const entity of tweet.entities.urls) {
+    tweet['text'] = tweet['text'].replace(entity.url, entity.expanded_url)
+  }
+  if (tweet.entities.media) {
+    tweet['media_urls'] = tweet.entities.media.map(val => {
+      return val.media_url_https
+    })
+  }
+  tweet['text'] = autolinker.link(escape(tweet['text']))
+  return tweet
+}
 const actions = {
-  [types.PUSH_TIMELINE] ({ dispatch, state, commit }, tweet) {
-    const autolinker = new Autolinker({ mention: 'twitter', hashtag: 'twitter' })
+  [types.PUSH_TIMELINE] ({ state, commit }, tweet) {
     if (tweet['retweeted_status']) {
-      for (const entity of tweet.retweeted_status.entities.urls) {
-        tweet['retweeted_status']['text'] = tweet['retweeted_status']['text'].replace(entity.url, entity.expanded_url)
-      }
-      tweet['retweeted_status']['text'] = autolinker.link(escape(tweet['retweeted_status']['text']))
+      tweet = expandEntities(tweet['retweeted_status'])
     } else {
-      for (const entity of tweet.entities.urls) {
-        tweet['text'] = tweet['text'].replace(entity.url, entity.expanded_url)
-      }
-      tweet['text'] = autolinker.link(escape(tweet['text']))
+      tweet = expandEntities(tweet)
     }
     commit(types.PUSH_TIMELINE, { tweet: tweet })
   },
