@@ -52,7 +52,7 @@ function expandEntities (tweet) {
 const actions = {
   [types.PUSH_TIMELINE] ({ state, commit }, tweet) {
     if (tweet['retweeted_status']) {
-      tweet = expandEntities(tweet['retweeted_status'])
+      tweet['retweeted_status'] = expandEntities(tweet['retweeted_status'])
     } else {
       tweet = expandEntities(tweet)
     }
