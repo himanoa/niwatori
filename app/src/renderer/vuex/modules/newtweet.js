@@ -1,5 +1,6 @@
 const electron = require('electron')
 const {dialog} = electron.remote
+const { readFile } = electron.remote.require('fs-promise')
 import * as types from '../mutation-types'
 import * as urlRegex from 'url-regex'
 import emojinize from 'emojinize'
@@ -18,8 +19,8 @@ const getters = {
     return 140 - state.input.replace(urlRegex(), 'aaaaaaaaaaaaaaaaaaaaaaa').length
   },
   replyTargetTweet: state => state.replyTargetTweet,
-  attachContents: state => state.attachContents,
-  attachContentsIds: state => state.attachContents
+  attachContentsDatas: state => state.attachContents.map(val => `data:image/${val.extension};base64,${val.data.toString('base64')}`),
+  attachContentsIds: state => state.attachContents.map(val => val.id)
 }
 const mutations = {
   [types.UPDATE_STATUS] (state) {
@@ -48,6 +49,7 @@ const mutations = {
 
 const actions = {
   [types.UPDATE_STATUS] ({commit}, args) {
+    console.dir(args['medias'])
     const param = {
       'status': emojinize.encode(args['status']),
       'in_reply_to_status_id': args['target']['id_str'] || undefined,
@@ -75,12 +77,31 @@ const actions = {
         { name: 'Images', extensions: ['jpg', 'png', 'gif'] }
       ]}, function (filePath) {
       for (let file of filePath) {
-        account.mediaUpload(file).then(data => {
-          console.dir(data)
-          commit(types.ATTACH_CONTENTS, { content: data['media_id_string'] })
+        new Promise((resolve, reject) => {
+          const extension = file.split('.').pop()
+          resolve({path: file, extension: extension})
+        }).then(result => new Promise((resolve, reject) => {
+          readFile(file).then(data => {
+            result['data'] = data
+            resolve(result)
+          }).catch(error => {
+            reject(error, error.stack)
+          })
+        })).then(result => new Promise((resolve, reject) => {
+          account.mediaUpload(result['data']).then(data => {
+            result['id'] = data['media_id_string']
+            resolve(result)
+          }).catch(error => {
+            reject(error)
+          })
+        })).then(result => {
+          commit(types.ATTACH_CONTENTS, { content: result })
+        }).catch(err => {
+          console.error(err, err.stack)
         })
       }
-    })
+    }
+    )
   }
 }
 
