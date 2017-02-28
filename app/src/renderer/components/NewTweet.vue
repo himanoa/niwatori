@@ -8,9 +8,10 @@
       <el-button type="primary" v-on:click="UPDATE_STATUS({ account: current, status:input, target: replyTargetTweet, medias: attachContentsIds })">ツイート</el-button>
       <span>{{ inputLength }}</span>
     </el-row>
-    <el-row v-if="attachContentsDatas.length > 0">
-      <span v-for="content in attachContentsDatas">
+    <el-row class="attachments"v-if="attachContentsDatas.length > 0">
+      <span v-for="(content, index) in attachContentsDatas">
         <img style="width: 200px; height: 200px;" :src="content"></img>
+        <a class="delete" @click="DELETE_CONTENTS(index)" href="#">☓</a>
       </span>
     </el-row>
   </div>
@@ -22,6 +23,23 @@
   margin-top: 10px;
   margin-bottom: 10px;
 }
+
+.el-row.attachments span {
+  display: inline-block;
+  position: relative;
+}
+
+.el-row.attachments span .delete {
+  position: absolute;
+  top: 10px;
+  right: 10px;
+  border-radius: 50%;
+  background-color: rgba(0, 0, 0, .4);
+  color: #fff;
+  width: 1em;
+  height: 1em;
+  line-height: 1;
+}
 </style>
 <script>
   import * as types from '../vuex/mutation-types'
@@ -31,7 +49,7 @@
       ...mapGetters(['current', 'input', 'inputLength', 'replyTargetTweet', 'attachContentsIds', 'attachContentsDatas'])
     },
     methods: {
-      ...mapActions([types.UPDATE_STATUS, types.UPDATE_INPUT, types.ATTACH_CONTENTS])
+      ...mapActions([types.UPDATE_STATUS, types.UPDATE_INPUT, types.ATTACH_CONTENTS, types.DELETE_CONTENTS])
     }
   }
 </script>

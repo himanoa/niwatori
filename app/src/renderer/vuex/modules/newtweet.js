@@ -44,6 +44,9 @@ const mutations = {
       console.dir(state.attachContents)
       state.attachContents.push(content)
     }
+  },
+  [types.DELETE_CONTENTS] (state, { number }) {
+    state.attachContents.splice(number, 1)
   }
 }
 
@@ -102,6 +105,9 @@ const actions = {
       }
     }
     )
+  },
+  [types.DELETE_CONTENTS] ({ commit }, number) {
+    commit(types.DELETE_CONTENTS, { number: number })
   }
 }
 
