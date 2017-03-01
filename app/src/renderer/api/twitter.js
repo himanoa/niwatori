@@ -24,13 +24,8 @@ class TwitterApi {
     })
   }
   startUserStreaming (callback) {
-    return this.client.stream('user', stream => {
-      stream.on('data', data => {
-        callback(data)
-      })
-      stream.on('error', error => {
-        console.error(error, error.stack)
-      })
+    return this.client.stream('user', {}, stream => {
+      callback(stream)
     })
   }
 }

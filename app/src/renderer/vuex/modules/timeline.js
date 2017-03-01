@@ -3,12 +3,14 @@ import urlRegex from 'url-regex'
 import escape from 'escape-html'
 const state = {
   timeline: [],
-  selectedTweet: null
+  selectedTweet: null,
+  idStrTweetsIndex: {}
 }
 
 const getters = {
   tweets: state => state.timeline.slice().reverse().slice(0, 100),
-  selectedTweet: state => state.selectedTweet
+  selectedTweet: state => state.selectedTweet,
+  idStrTweetsIndex: state => state.idStrTweetsIndex
 }
 
 const mutations = {
@@ -17,6 +19,7 @@ const mutations = {
       state.selectedTweet++
     }
     state.timeline.push(tweet)
+    state.idStrTweetsIndex[tweet['id_str']] = state.timeline.length
   },
   [types.CLICKED_TWEET] (state, { num }) {
     state.selectedTweet = num
@@ -34,6 +37,15 @@ const mutations = {
     } else {
       state.timeline[index + 1]['favorited'] = true
     }
+  },
+  [types.DELETE_TWEET] (state, { idStr }) {
+    console.log('dispatched!')
+    console.log(state.idStrTweetsIndex[idStr['idStr']])
+    const index = state.idStrTweetsIndex[idStr['idStr']]
+    if (index === undefined) {
+      return
+    }
+    state.timeline = state.timeline.slice(index, 1)
   }
 }
 function expandEntities (tweet) {
@@ -64,6 +76,10 @@ const actions = {
   },
   [types.CLICKED_TWEET] ({ commit }, num) {
     commit(types.CLICKED_TWEET, { num })
+  },
+  [types.DELETE_TWEET] ({ commit }, idStr) {
+    console.log('commited!')
+    commit(types.DELETE_TWEET, { idStr: idStr })
   }
 }
 

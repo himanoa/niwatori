@@ -25,10 +25,17 @@ const actions = {
       accessTokenSecret: account.accessTokenSecret
     })
     console.dir(client)
-    client.startUserStreaming((data) => {
-      if (data['created_at']) {
-        dispatch(types.PUSH_TIMELINE, data)
-      }
+    client.startUserStreaming((stream) => {
+      stream.on('delete', (data) => {
+        dispatch(types.DELETE_TWEET, { idStr: data['delete']['status']['id_str'] })
+      })
+      stream.on('data', (data) => {
+        if (data['delete']) {
+          console.log('fugafuga')
+        } else if (data['created_at']) {
+          dispatch(types.PUSH_TIMELINE, data)
+        }
+      })
     })
     commit(types.ADD_ACCOUNT, {client: client})
   },
