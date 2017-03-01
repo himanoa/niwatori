@@ -23,7 +23,9 @@ class TwitterApi {
       resolve(this.client.post('media/upload', { media: media }))
     })
   }
-  startUserStreaming (callback) {
+  async startUserStreaming (callback) {
+    const data = await this.client.get('account/verify_credentials', {})
+    this.profile = await data
     return this.client.stream('user', {}, stream => {
       callback(stream)
     })

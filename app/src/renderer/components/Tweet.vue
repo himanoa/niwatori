@@ -39,6 +39,7 @@
       </el-col>
     </el-row>
   </tweet>
+  </div>
 </template>
 <style scoped>
 .icon {

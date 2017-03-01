@@ -2,30 +2,34 @@ import TwitterApi from '../../api/twitter'
 import * as types from '../mutation-types'
 
 const state = {
-  clients: []
+  clients: {}
 }
 
 const getters = {
   accounts: state => state.clients,
-  current: state => state.clients[0]
+  current: state => state.clients[Object.keys(state.clients)[0]]
 }
 
 const mutations = {
   [types.ADD_ACCOUNT] (state, { client }) {
-    state.clients.push(client)
+    if (state.clients[client.profile.id_str]) {
+      state.clients[client.profile.id_str].destroyStream()
+      state.clients[client.profile.id_str] = undefined
+    }
+    state.clients[client.profile.id_str] = client
   }
 }
 
 const actions = {
-  [types.ADD_ACCOUNT] ({ state, dispatch, commit }, {account}) {
+  async [types.ADD_ACCOUNT] ({ state, dispatch, commit }, {account}) {
     const client = new TwitterApi.TwitterApi({
       consumerKey: account.consumerKey,
       consumerSecret: account.consumerSecret,
       accessToken: account.accessToken,
       accessTokenSecret: account.accessTokenSecret
     })
-    console.dir(client)
-    client.startUserStreaming((stream) => {
+    await client.startUserStreaming((stream) => {
+      client.destroyStream = stream.destroy
       stream.on('delete', (data) => {
         dispatch(types.DELETE_TWEET, { idStr: data['delete']['status']['id_str'] })
       })
