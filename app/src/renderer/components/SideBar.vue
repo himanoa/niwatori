@@ -1,9 +1,9 @@
 <template>
-  <el-menu default-active="1-1" class="el-menu-vertical-demo" @open="handleOpen" @close="handleClose" theme="dark">
+  <el-menu class="el-menu-vertical-demo" theme="dark">
     <el-submenu index="1">
       <template slot="title">アカウント</template>
       <el-menu-item-group title="h1maoa">
-        <el-menu-item index="1-1">item one</el-menu-item>
+        <el-menu-item index="1-1"><router-link :to="{ path: '/timeline' }">Home</router-link></el-menu-item>
         <el-menu-item index="1-2">item two</el-menu-item>
       </el-menu-item-group>
     </el-submenu>
@@ -14,5 +14,9 @@
 <style scoped>
 .el-menu {
   height: 100%;
+}
+a {
+  text-decoration: none;
+  color: #bfcbd9;
 }
 </style>
