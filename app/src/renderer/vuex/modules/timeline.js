@@ -9,6 +9,7 @@ const state = {
 
 const getters = {
   tweets: state => state.timeline.slice().reverse().slice(0, 100),
+  mentions: state => state.timeline.filter(val => val.in_reply_to_screen_name === val.who).slice().reverse().slice(0, 100),
   selectedTweet: state => state.selectedTweet,
   idStrTweetsIndex: state => state.idStrTweetsIndex
 }
@@ -65,7 +66,10 @@ function expandEntities (tweet) {
   return tweet
 }
 const actions = {
-  [types.PUSH_TIMELINE] ({ state, commit }, tweet) {
+  [types.PUSH_TIMELINE] ({ state, commit }, args) {
+    console.log(args['screenName'])
+    let tweet = args.tweet
+    tweet['who'] = args['screenName']
     if (tweet['retweeted_status']) {
       tweet['retweeted_status'] = expandEntities(tweet['retweeted_status'])
       tweet['media_urls'] = tweet['retweeted_status']['media_urls']

@@ -4,6 +4,7 @@ import Resource from 'vue-resource'
 import Router from 'vue-router'
 import ElementUI from 'element-ui'
 import TimeLine from './components/TimeLine'
+import Mention from './components/Mention'
 import 'element-ui/lib/theme-default/index.css'
 
 import App from './App'
@@ -20,6 +21,10 @@ const router = new Router({
     {
       path: '/timeline',
       component: TimeLine
+    },
+    {
+      path: '/mention',
+      component: Mention
     }
   ]
 })

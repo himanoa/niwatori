@@ -37,7 +37,7 @@ const actions = {
         if (data['delete']) {
           console.log('fugafuga')
         } else if (data['created_at']) {
-          dispatch(types.PUSH_TIMELINE, data)
+          dispatch(types.PUSH_TIMELINE, {tweet: data, screenName: client.profile.screen_name})
         }
       })
     })
