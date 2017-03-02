@@ -8,8 +8,8 @@ const state = {
 }
 
 const getters = {
-  tweets: state => state.timeline.slice(0, 50),
-  mentions: state => state.timeline.filter(val => val.in_reply_to_screen_name === val.who).slice().reverse(),
+  tweets: state => state.timeline.slice(0, 50).sort((a, b) => new Date(b.created_at) - new Date(a.created_at)),
+  mentions: state => state.timeline.filter(val => val.in_reply_to_screen_name === val.who),
   selectedTweet: state => state.selectedTweet,
   idStrTweetsIndex: state => state.idStrTweetsIndex
 }
