@@ -31,9 +31,10 @@ const mutations = {
     state.input = message
   },
   [types.REPLY] (state, { targetReply }) {
+    console.dir(targetReply)
     state.replyTargetTweet = targetReply
     // ex. "@h1manoa @h2manoa @h3manoa I am a @niwatori_dev." -> "@h1manoa @h2manoa @h3manoa @niwatori_dev"
-    const replyTargets = `@${state.replyTargetTweet['user']['screen_name']} `
+    const replyTargets = `@${state.replyTargetTweet['user']['screen_name']}`
     state.input = `${replyTargets} ${state.input}`
   },
   [types.ATTACH_CONTENTS] (state, { content }) {
@@ -70,7 +71,7 @@ const actions = {
   },
   [types.REPLY] ({commit}, args) {
     console.dir(args['tweet'])
-    args['tweet'] = args['tweet']['retweeted_status'] || args['tweet']
+    args['tweet'] = args['tweet'] || args['tweet']['retweeted_status']
     commit(types.REPLY, { targetReply: args['tweet'] })
   },
   [types.ATTACH_CONTENTS] ({commit}, account) {
