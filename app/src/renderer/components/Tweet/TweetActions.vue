@@ -39,7 +39,7 @@
 </style>
 <script>
 import { mapActions, mapGetters } from 'vuex'
-import * as types from '../vuex/mutation-types'
+import * as types from '../..//vuex/mutation-types'
 export default {
   computed: {
     ...mapGetters(['accounts', 'current', ''])

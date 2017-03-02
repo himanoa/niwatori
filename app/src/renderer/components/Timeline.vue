@@ -17,7 +17,7 @@
 }
 </style>
 <script>
-import Tweet from './Tweet'
+import Tweet from './Tweet/Tweet'
 import { mapGetters } from 'vuex'
 export default {
   computed: {
