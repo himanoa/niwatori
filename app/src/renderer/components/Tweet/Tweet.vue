@@ -1,28 +1,25 @@
 <template>
-  <div class="tweet" v-on:click="CLICKED_TWEET(index)" :style="{'background-color': index === selectedTweet ? '#9dceff' : 'white'}">
+  <div v-on:click="CLICKED_TWEET(index)"
+       :style="{'background-color': index === selectedTweet ? '#9dceff' : 'white'}"
+       :class="{ retweeted: tweet['retweeted_status']['text'], tweet: true }">
     <input type="hidden" :value="selectedTweet">
     <input type="hidden" :value="index">
     <el-row :gutter="5">
       <el-col :span="2">
-        <img class="icon" v-if="tweet['retweeted_status']" :src="tweet['retweeted_status']['user']['profile_image_url_https']" style=" width:100%;">
-        <img v-else class="icon" :src="tweet['user']['profile_image_url_https']" style="width:100%;">
+        <img class="icon"
+             :src="tweet['retweeted_status']['user']['profile_image_url_https'] || tweet['user']['profile_image_url_https']"
+             style=" width:100%;">
       </el-col>
       <el-col :span="22">
-        <el-row v-if="tweet['retweeted_status']">
-          <strong class="retweeted">{{tweet['retweeted_status']['user']['name']}}</strong>
-          <span class="retweeted">@{{tweet['retweeted_status']['user']['screen_name']}}</span>
-          <span class="retweeted"> {{new Date(tweet['retweeted_status']['created_at']).toLocaleDateString() + ' ' + new Date(tweet['retweeted_status']['created_at']).toLocaleTimeString()}}</span>
-        </el-row>
-        <el-row v-else>
-          <strong>{{tweet['user']['name']}}</strong>
-          <span>@{{tweet['user']['screen_name']}}</span>
-          <span> {{new Date(tweet['created_at']).toLocaleDateString() + ' ' + new Date(tweet['created_at']).toLocaleTimeString()}}</span>
+        <el-row>
+          <strong :class="{ retweeted: tweet['retweeted_status']['text']}">{{tweet['retweeted_status']['user']['name'] || tweet['user']['name'] }}</strong>
+          <span :class="{ retweeted: tweet['retweeted_status']['text']}">@{{tweet['retweeted_status']['user']['screen_name'] || tweet['user']['screen_name']}}</span>
+          <span :class="{ retweeted: tweet['retweeted_status']['text']}"> {{formatDate()}}</span>
         </el-row>
         <el-row>
-          <p class="retweeted" v-if="tweet['retweeted_status']"style="width: 100%;" v-html="tweet['retweeted_status']['text']"></p>
-          <p v-else style="width: 100%;" v-html="tweet['text']"></p>
+          <p :class="{ retweeted: tweet['retweeted_status']['text']}" style="width: 100%;" v-html="tweet['retweeted_status']['text'] || tweet['text']"></p>
         </el-row>
-        <el-row v-if="tweet['retweeted_status']">
+        <el-row v-if="tweet['retweeted_status']['text']">
           <p class="retweeted">retweeted by <img class="icon" style="height: 30px;":src="tweet['user']['profile_image_url_https']">@{{tweet['user']['screen_name']}}</p>
         </el-row>
         <el-row v-if="tweet['media_urls'].length > 0">
@@ -33,7 +30,7 @@
           </span>
         </el-row>
         <el-row>
-          <tweet-actions v-if="tweet['retweeted_status']" :tweet="tweet['retweeted_status']" :index="index"></tweet-actions>
+          <tweet-actions v-if="tweet['retweeted_status']['text']" :tweet="tweet['retweeted_status']" :index="index"></tweet-actions>
           <tweet-actions v-else :tweet="tweet" :index="index"></tweet-actions>
         </el-row>
       </el-col>
@@ -82,6 +79,12 @@ export default {
     ...mapActions(['CLICKED_TWEET']),
     mediaUrls (tweet) {
       return tweet['media_urls'] || []
+    },
+    formatDate () {
+      const date = new Date(this.tweet['retweeted_status']['created_at'] || this.tweet['created_at'])
+      const dataString = date.toLocaleTimeString()
+      const timeString = date.toLocaleDateString()
+      return `${dataString} ${timeString}`
     }
   },
   props: {

@@ -76,6 +76,7 @@ const actions = {
     } else {
       tweet = expandEntities(tweet)
     }
+    tweet['retweeted_status'] = tweet['retweeted_status'] || { user: {} }
     commit(types.PUSH_TIMELINE, { tweet: tweet })
   },
   [types.CLICKED_TWEET] ({ commit }, num) {

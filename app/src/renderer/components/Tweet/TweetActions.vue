@@ -47,18 +47,10 @@ export default {
   methods: {
     ...mapActions([ types.RETWEET, types.FAVORITE, types.REPLY ]),
     favorite: function () {
-      if (this.tweet['retweeted_status']) {
-        this.tweet['retweeted_status']['favorited'] = true
-      } else {
-        this.tweet['favorited'] = true
-      }
+      this.tweet['favorited'] = true
     },
     retweet: function () {
-      if (this.tweet['retweeted_status']) {
-        this.tweet['retweeted_status']['retweeted'] = true
-      } else {
-        this.tweet['retweeted'] = true
-      }
+      this.tweet['retweeted'] = true
     }
   },
   props: {
