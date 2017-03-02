@@ -8,7 +8,7 @@ const state = {
 }
 
 const getters = {
-  tweets: state => state.timeline.slice().reverse().slice(0, 50),
+  tweets: state => state.timeline.slice(0, 50),
   mentions: state => state.timeline.filter(val => val.in_reply_to_screen_name === val.who).slice().reverse(),
   selectedTweet: state => state.selectedTweet,
   idStrTweetsIndex: state => state.idStrTweetsIndex
@@ -19,25 +19,11 @@ const mutations = {
     if (state.selectedTweet !== null) {
       state.selectedTweet++
     }
-    state.timeline.push(tweet)
+    state.timeline.unshift(tweet)
     state.idStrTweetsIndex[tweet['id_str']] = state.timeline.length
   },
   [types.CLICKED_TWEET] (state, { num }) {
     state.selectedTweet = num
-  },
-  [types.RETWEET] (state, {index}) {
-    if (state.timeline[index + 1]['retweeted_status']) {
-      state.timeline[index + 1]['retweeted_status']['retweeted'] = true
-    } else {
-      state.timeline[index + 1]['retweeted'] = true
-    }
-  },
-  [types.FAVORITE] (state, {index}) {
-    if (state.timeline[index + 1]['retweeted_status']) {
-      state.timeline[index + 1]['retweeted_status']['favorited'] = true
-    } else {
-      state.timeline[index + 1]['favorited'] = true
-    }
   },
   [types.DELETE_TWEET] (state, { idStr }) {
     console.log('dispatched!')
@@ -46,7 +32,7 @@ const mutations = {
     if (index === undefined) {
       return
     }
-    state.timeline.splice(index, 1)
+    state.timeline.splice(state.timeline.length - index, 1)
   }
 }
 function expandEntities (tweet) {
