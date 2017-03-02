@@ -46,7 +46,7 @@ const mutations = {
     if (index === undefined) {
       return
     }
-    state.timeline = state.timeline.slice(index, 1)
+    state.timeline.splice(index, 1)
   }
 }
 function expandEntities (tweet) {
