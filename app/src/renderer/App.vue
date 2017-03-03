@@ -24,6 +24,11 @@
   import * as types from 'renderer/vuex/mutation-types'
   const electron = require('electron')
   const storage = electron.remote.require('electron-json-storage')
+  electron.ipcRenderer.on('success-oauth', (event, message) => {
+    store.dispatch(types.ADD_ACCOUNT, { account: message }).catch(err => {
+      console.error(err, err.stack)
+    })
+  })
   async function login () {
     const datas = await new Promise((resolve, reject) => {
       storage.get('twitterOAuth', (err, data) => {

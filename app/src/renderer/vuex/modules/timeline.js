@@ -53,7 +53,6 @@ function expandEntities (tweet) {
 }
 const actions = {
   [types.PUSH_TIMELINE] ({ state, commit }, args) {
-    console.log(args['screenName'])
     let tweet = args.tweet
     tweet['who'] = args['screenName']
     if (tweet['retweeted_status']) {

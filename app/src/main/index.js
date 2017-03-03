@@ -1,6 +1,6 @@
 'use strict'
 
-import { shell, app, BrowserWindow } from 'electron'
+import { ipcMain, shell, app, BrowserWindow } from 'electron'
 const storage = require('electron-json-storage')
 const OAuthTwitter = require('electron-oauth-twitter')
 
@@ -9,24 +9,35 @@ const twitterOAuthKey = {
   secret: 'hooQ3wY1pg66cLMxqj6LowSlnOlNjapWSWIUD8vI2NOEgf7wKq'
 }
 console.dir(storage)
+async function authenticate (callback) {
+  let twitter = new OAuthTwitter(twitterOAuthKey)
+  twitter.startRequest().then(result => {
+    const auth = [{
+      consumerKey: twitterOAuthKey.key,
+      consumerSecret: twitterOAuthKey.secret,
+      accessToken: result.oauth_access_token,
+      accessTokenSecret: result.oauth_access_token_secret
+    }]
+    new Promise((resolve, reject) => {
+      storage.get('twitterOAuth', function(err, data){
+        if(err) throw err
+        resolve(data)
+      })
+    }).then(data => {
+        storage.set('twitterOAuth', [...data,...auth], function (err) {
+          if (err) throw err
+          callback(auth)
+        })
+    })
+  }).catch(error => new Promise((resolve, reject) => {
+    console.error(error, error.stack)
+  }))
+}
+
 storage.get('twitterOAuth', function (error, data) {
   if (error) throw error
   if (Object.keys(data).length === 0) {
-    let twitter = new OAuthTwitter(twitterOAuthKey)
-    twitter.startRequest().then(result => {
-      const auth = [{
-        consumerKey: twitterOAuthKey.key,
-        consumerSecret: twitterOAuthKey.secret,
-        accessToken: result.oauth_access_token,
-        accessTokenSecret: result.oauth_access_token_secret
-      }]
-      storage.set('twitterOAuth', auth, function (err) {
-        if (err) throw err
-        createWindow()
-      })
-    }).catch(error => new Promise((resolve, reject) => {
-      console.error(error, error.stack)
-    }))
+    authenticate(createWindow)
   } else {
     createWindow()
   }
@@ -71,4 +82,10 @@ app.on('activate', () => {
   if (mainWindow === null) {
     createWindow()
   }
+})
+
+ipcMain.on('openOAuthDialog', (auth) => {
+  authenticate(() => {
+    mainWindow.webContents.send('success-oauth', auth)
+  })
 })

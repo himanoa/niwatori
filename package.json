@@ -82,7 +82,7 @@
   },
   "dependencies": {
     "electron-json-storage": "^3.0.1",
-    "electron-oauth-twitter": "git@github.com:himanoa/electron-oauth-twitter.git",
+    "electron-oauth-twitter": "himanoa//electron-oauth-twitter#master",
     "element-ui": "^1.1.6",
     "emojinize": "^1.0.0",
     "flexboxgrid": "^6.3.1",
