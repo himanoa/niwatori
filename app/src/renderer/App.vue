@@ -24,14 +24,22 @@
   import * as types from 'renderer/vuex/mutation-types'
   const electron = require('electron')
   const storage = electron.remote.require('electron-json-storage')
-  new Promise((resolve, reject) => {
-    storage.get('twitterOAuth', (err, data) => {
-      if (err) reject(err)
-      resolve(data)
+  async function login () {
+    const datas = await new Promise((resolve, reject) => {
+      storage.get('twitterOAuth', (err, data) => {
+        if (err) reject(err)
+        resolve(data)
+      })
+    }).catch(err => {
+      console.error(err, err.stack)
     })
-  }).then(data => {
-    store.dispatch(types.ADD_ACCOUNT, {account: data})
-  })
+    for (const data of datas) {
+      await store.dispatch(types.ADD_ACCOUNT, {account: data}).catch(err => {
+        console.error(err, err.stack)
+      })
+    }
+  }
+  login()
   export default {
     store,
     components: {

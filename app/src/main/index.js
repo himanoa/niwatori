@@ -14,12 +14,12 @@ storage.get('twitterOAuth', function (error, data) {
   if (Object.keys(data).length === 0) {
     let twitter = new OAuthTwitter(twitterOAuthKey)
     twitter.startRequest().then(result => {
-      const auth = {
+      const auth = [{
         consumerKey: twitterOAuthKey.key,
         consumerSecret: twitterOAuthKey.secret,
         accessToken: result.oauth_access_token,
         accessTokenSecret: result.oauth_access_token_secret
-      }
+      }]
       storage.set('twitterOAuth', auth, function (err) {
         if (err) throw err
         createWindow()
