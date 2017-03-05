@@ -19,7 +19,9 @@ const mutations = {
       state.clients[client.profile.id_str] = undefined
     }
     state.clients[client.profile.id_str] = client
+    state.clients = {...state.clients}
     state.clientIds.push(client.profile.id_str)
+    state.clientIds = [..clientIds]
   }
 }
 
