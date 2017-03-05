@@ -6,7 +6,8 @@ import ElementUI from 'element-ui'
 import TimeLine from './components/TimeLine'
 import Mention from './components/Mention'
 import 'element-ui/lib/theme-default/index.css'
-
+import store from 'renderer/vuex/store'
+import { sync } from 'vuex-router-sync'
 import App from './App'
 
 Vue.use(ElementUI)
@@ -19,18 +20,23 @@ const router = new Router({
   scrollBehavior: () => ({ y: 0 }),
   routes: [
     {
-      path: '/timeline',
+      path: '/timeline/:id_str',
+      name: 'timeline',
       component: TimeLine
     },
     {
-      path: '/mention',
+      path: '/mention/:id_str',
+      name: 'mention',
       component: Mention
     }
   ]
 })
 
+sync(store, router)
+console.dir(store)
 /* eslint-disable no-new */
 new Vue({
+  store,
   router,
   ...App
 }).$mount('#app')

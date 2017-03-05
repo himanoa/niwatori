@@ -82,13 +82,15 @@
   },
   "dependencies": {
     "electron-json-storage": "^3.0.1",
-    "electron-oauth-twitter": "himanoa//electron-oauth-twitter#master",
+    "electron-oauth-twitter": "^1.1.0",
     "element-ui": "^1.1.6",
     "emojinize": "^1.0.0",
     "flexboxgrid": "^6.3.1",
     "fs-promise": "^2.0.0",
     "twitter": "^1.7.0",
     "url-regex": "^4.0.0",
+    "vue-router": "^2.3.0",
+    "vuex-router-sync": "^3.0.0",
     "xss-filters": "^1.2.7"
   }
 }

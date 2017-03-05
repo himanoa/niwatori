@@ -2,37 +2,45 @@ import * as types from '../mutation-types'
 import urlRegex from 'url-regex'
 import * as xssFilters from 'xss-filters'
 const state = {
-  timeline: [],
-  selectedTweet: null,
+  timeline: {},
+  selectedTweet: {},
   idStrTweetsIndex: {}
 }
 
 const getters = {
-  tweets: state => state.timeline.slice(0, 50).sort((a, b) => new Date(b.created_at) - new Date(a.created_at)),
-  mentions: state => state.timeline.filter(val => val.in_reply_to_screen_name === val.who),
-  selectedTweet: state => state.selectedTweet,
-  idStrTweetsIndex: state => state.idStrTweetsIndex
+  tweets: (state, getters, rootState) => {
+    console.dir(rootState.route.params)
+    return state.timeline[rootState.route.params.id_str].slice(0, 50).sort((a, b) => new Date(b.created_at) - new Date(a.created_at))
+  },
+  mentions: (state, getters, rootState) => state.timeline[rootState.route.params.id_str].filter(val => val.in_reply_to_screen_name === val.who),
+  selectedTweet: (state, getters, rootState) => state.selectedTweet[rootState.route.params.id_str],
+  idStrTweetsIndex: (state, getters, rootState) => state.idStrTweetsIndex[rootState.route.params.id_str]
 }
 
 const mutations = {
-  [types.PUSH_TIMELINE] (state, { tweet }) {
-    if (state.selectedTweet !== null) {
-      state.selectedTweet++
+  [types.PUSH_TIMELINE] (state, { tweet, who }) {
+    state.timeline[who].unshift(tweet)
+    if (state.selectedTweet[who] !== undefined) {
+      state.selectedTweet[who]++
     }
-    state.timeline.unshift(tweet)
-    state.idStrTweetsIndex[tweet['id_str']] = state.timeline.length
+    state.idStrTweetsIndex[who][tweet['id_str']] = state.timeline.length
   },
   [types.CLICKED_TWEET] (state, { num }) {
-    state.selectedTweet = num
+    state.selectedTweet[state.route.params.id] = num
   },
-  [types.DELETE_TWEET] (state, { idStr }) {
+  [types.DELETE_TWEET] (state, { idStr, who }) {
     console.log('dispatched!')
-    console.log(state.idStrTweetsIndex[idStr['idStr']])
-    const index = state.idStrTweetsIndex[idStr['idStr']]
+    console.log(state.idStrTweetsIndex[state.route.params.id][idStr['idStr']])
+    const index = state.idStrTweetsIndex[state.route.params.id][idStr['idStr']]
     if (index === undefined) {
       return
     }
-    state.timeline.splice(state.timeline.length - index, 1)
+    state.timeline.splice(state.timeline[state.route.params.id].length - index, 1)
+  },
+  [types.INIT_ACCOUNT] (state, idStr) {
+    state.timeline[idStr] = []
+    state.selectedTweet[idStr] = undefined
+    state.idStrTweetsIndex[idStr] = {}
   }
 }
 function expandEntities (tweet) {
@@ -62,14 +70,18 @@ const actions = {
       tweet = expandEntities(tweet)
     }
     tweet['retweeted_status'] = tweet['retweeted_status'] || { user: {} }
-    commit(types.PUSH_TIMELINE, { tweet: tweet })
+    console.dir(tweet)
+    commit(types.PUSH_TIMELINE, { tweet: tweet, who: args.who })
   },
-  [types.CLICKED_TWEET] ({ commit }, num) {
-    commit(types.CLICKED_TWEET, { num })
-  },
-  [types.DELETE_TWEET] ({ commit }, idStr) {
+  [types.DELETE_TWEET] ({ commit }, args) {
     console.log('commited!')
-    commit(types.DELETE_TWEET, { idStr: idStr })
+    commit(types.DELETE_TWEET, { idStr: args.idStr, who: args.who })
+  },
+  [types.INIT_ACCOUNT] ({ commit }, idStr) {
+    commit(types.INIT_ACCOUNT, idStr)
+  },
+  [types.CLICKED_TWEET] ({ commit }, args) {
+    commit(types.CLICKED_TWEET, { num: args.num })
   }
 }
 

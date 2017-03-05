@@ -9,7 +9,7 @@ const twitterOAuthKey = {
   secret: 'hooQ3wY1pg66cLMxqj6LowSlnOlNjapWSWIUD8vI2NOEgf7wKq'
 }
 console.dir(storage)
-async function authenticate (callback) {
+function authenticate (callback) {
   let twitter = new OAuthTwitter(twitterOAuthKey)
   twitter.startRequest().then(result => {
     const auth = [{
@@ -19,15 +19,15 @@ async function authenticate (callback) {
       accessTokenSecret: result.oauth_access_token_secret
     }]
     new Promise((resolve, reject) => {
-      storage.get('twitterOAuth', function(err, data){
-        if(err) throw err
+      storage.get('twitterOAuth', function (err, data) {
+        if (err) throw err
         resolve(data)
       })
     }).then(data => {
-        storage.set('twitterOAuth', [...data,...auth], function (err) {
-          if (err) throw err
-          callback(auth)
-        })
+      storage.set('twitterOAuth', [...data, ...auth], function (err) {
+        if (err) throw err
+        callback(auth)
+      })
     })
   }).catch(error => new Promise((resolve, reject) => {
     console.error(error, error.stack)

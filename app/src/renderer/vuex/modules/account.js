@@ -2,12 +2,14 @@ import TwitterApi from '../../api/twitter'
 import * as types from '../mutation-types'
 
 const state = {
-  clients: {}
+  clients: {},
+  clientIds: []
 }
 
 const getters = {
   accounts: state => state.clients,
-  current: state => state.clients[Object.keys(state.clients)[0]]
+  clientIds: state => state.clientIds,
+  current: state => state.clients[state.route.params.id]
 }
 
 const mutations = {
@@ -17,6 +19,7 @@ const mutations = {
       state.clients[client.profile.id_str] = undefined
     }
     state.clients[client.profile.id_str] = client
+    state.clientIds.push(client.profile.id_str)
   }
 }
 
@@ -30,14 +33,15 @@ const actions = {
     })
     await client.startUserStreaming((stream) => {
       client.destroyStream = stream.destroy
+      dispatch(types.INIT_ACCOUNT, client.profile.id_str)
       stream.on('delete', (data) => {
-        dispatch(types.DELETE_TWEET, { idStr: data['delete']['status']['id_str'] })
+        dispatch(types.DELETE_TWEET, { idStr: data['delete']['status']['id_str'], who: client.profile.idStr })
       })
       stream.on('data', (data) => {
         if (data['delete']) {
           console.log('fugafuga')
         } else if (data['created_at']) {
-          dispatch(types.PUSH_TIMELINE, {tweet: data, screenName: client.profile.screen_name})
+          dispatch(types.PUSH_TIMELINE, {tweet: data, who: client.profile.id_str})
         }
       })
     })

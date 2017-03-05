@@ -42,7 +42,7 @@ import { mapActions, mapGetters } from 'vuex'
 import * as types from '../..//vuex/mutation-types'
 export default {
   computed: {
-    ...mapGetters(['accounts', 'current', ''])
+    ...mapGetters(['accounts', 'current'])
   },
   methods: {
     ...mapActions([ types.RETWEET, types.FAVORITE, types.REPLY ]),

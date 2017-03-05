@@ -14,3 +14,5 @@ export const REPLY = 'REPLY'
 
 export const ATTACH_CONTENTS = 'ATTACH_CONTENTS'
 export const DELETE_CONTENTS = 'DELETE_CONTENTS'
+
+export const INIT_ACCOUNT = 'INIT_ACCOUNT'

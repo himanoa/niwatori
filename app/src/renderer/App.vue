@@ -46,7 +46,6 @@
   }
   login()
   export default {
-    store,
     components: {
       NewTweet,
       TimeLine,
