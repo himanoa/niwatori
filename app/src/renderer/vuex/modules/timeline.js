@@ -20,6 +20,7 @@ const getters = {
 const mutations = {
   [types.PUSH_TIMELINE] (state, { tweet, who }) {
     state.timeline[who].unshift(tweet)
+    state.timeline = {...state.timeline}
     if (state.selectedTweet[who] !== undefined) {
       state.selectedTweet[who]++
     }
