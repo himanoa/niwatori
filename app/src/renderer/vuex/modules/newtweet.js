@@ -107,7 +107,7 @@ const actions = {
     )
   },
   [types.DELETE_CONTENTS] ({ commit }, number) {
-    commit(types.DELETE_CONTENTS, { number: number })
+    // commit(types.DELETE_CONTENTS, { number: number })
   }
 }
 

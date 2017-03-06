@@ -37,7 +37,7 @@ const actions = {
       client.destroyStream = stream.destroy
       dispatch(types.INIT_ACCOUNT, client.profile.id_str)
       stream.on('delete', (data) => {
-        dispatch(types.DELETE_TWEET, { idStr: data['delete']['status']['id_str'], who: client.profile.idStr })
+        dispatch(types.DELETE_TWEET, { idStr: data['delete']['status']['id_str'], who: client.profile.id_str })
       })
       stream.on('data', (data) => {
         if (data['created_at']) {

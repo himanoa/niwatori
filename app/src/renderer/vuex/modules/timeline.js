@@ -26,7 +26,7 @@ const mutations = {
     if (state.selectedTweet[who] !== undefined) {
       state.selectedTweet[who]++
     }
-    state.idStrTweetsIndex[who][tweet['id_str']] = state.timeline.length
+    state.idStrTweetsIndex[who][tweet['id_str']] = state.timeline[who].length
   },
   [types.CLICKED_TWEET] (state, { num, route }) {
     state.selectedTweet[route.params.id_str] = num
@@ -34,7 +34,7 @@ const mutations = {
   },
   [types.DELETE_TWEET] (state, { idStr, who }) {
     console.log('dispatched!')
-    console.log(state.idStrTweetsIndex[who][idStr['idStr']])
+    console.log(who)
     const index = state.idStrTweetsIndex[who][idStr['idStr']]
     if (index === undefined) {
       return
