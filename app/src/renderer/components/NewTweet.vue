@@ -4,11 +4,11 @@
       <el-input :value="input" @input.self="UPDATE_INPUT" type="textarea" :row="4" placeholder="今何してる？"></el-input>
     </el-row>
     <el-row>
-      <el-button type='primary' v-on:click="ATTACH_CONTENTS(current)" icon="picture"></el-button>
-      <el-button type="primary" v-on:click="UPDATE_STATUS({ account: current, status:input, target: replyTargetTweet, medias: attachContentsIds })">ツイート</el-button>
+      <el-button type='primary' v-on:click="ATTACH_CONTENTS" icon="picture"></el-button>
+      <el-button type="primary" v-on:click="UPDATE_STATUS">ツイート</el-button>
       <span>{{ inputLength }}</span>
     </el-row>
-    <el-row class="attachments"v-if="attachContentsDatas.length > 0">
+    <el-row class="attachments" v-if="attachContentsDatas.length > 0">
       <span v-for="(content, index) in attachContentsDatas">
         <img style="width: 200px; height: 200px;" :src="content"></img>
         <a class="delete" @click="DELETE_CONTENTS(index)" href="#">☓</a>
@@ -46,7 +46,7 @@
   import { mapGetters, mapActions } from 'vuex'
   export default {
     computed: {
-      ...mapGetters(['current', 'input', 'inputLength', 'replyTargetTweet', 'attachContentsIds', 'attachContentsDatas'])
+      ...mapGetters(['current', 'input', 'inputLength', 'replyTargetTweet', 'attachContentsIds', 'attachContentsDatas', 'accounts', 'clientIds'])
     },
     methods: {
       ...mapActions([types.UPDATE_STATUS, types.UPDATE_INPUT, types.ATTACH_CONTENTS, types.DELETE_CONTENTS])

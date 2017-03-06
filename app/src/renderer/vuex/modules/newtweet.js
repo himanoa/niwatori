@@ -52,15 +52,14 @@ const mutations = {
 }
 
 const actions = {
-  [types.UPDATE_STATUS] ({commit}, args) {
-    console.dir(args['medias'])
+  [types.UPDATE_STATUS] ({commit, state, rootState}, args) {
     const param = {
-      'status': emojinize.encode(args['status']),
-      'in_reply_to_status_id': args['target']['id_str'] || undefined,
-      'media_ids': args['medias'].toString() || undefined
+      'status': emojinize.encode(state.input),
+      'in_reply_to_status_id': state.replyTargetTweet || undefined,
+      'media_ids': state.attachContents.map(val => val.id).toString() || undefined
     }
-    console.dir(param)
-    args['account'].updateStatus(param).then(() => {
+    console.dir(state.attachContents)
+    rootState.account.clients[rootState.route.params.id_str].updateStatus(param).then(() => {
       commit(types.UPDATE_STATUS)
     }).catch(err => {
       console.error(err, err.stack)
@@ -74,7 +73,7 @@ const actions = {
     args['tweet'] = args['tweet'] || args['tweet']['retweeted_status']
     commit(types.REPLY, { targetReply: args['tweet'] })
   },
-  [types.ATTACH_CONTENTS] ({commit}, account) {
+  [types.ATTACH_CONTENTS] ({commit, rootState}) {
     dialog.showOpenDialog({
       properties: ['openFile'],
       filters: [
@@ -92,7 +91,7 @@ const actions = {
             reject(error, error.stack)
           })
         })).then(result => new Promise((resolve, reject) => {
-          account.mediaUpload(result['data']).then(data => {
+          rootState.account.clients[rootState.route.params.id_str].mediaUpload(result['data']).then(data => {
             result['id'] = data['media_id_string']
             resolve(result)
           }).catch(error => {

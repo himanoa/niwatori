@@ -39,7 +39,8 @@ const mutations = {
     if (index === undefined) {
       return
     }
-    state.timeline.splice(state.timeline[who].length - index, 1)
+    state.timeline[who].splice(state.timeline[who].length - index, 1)
+    state.timelime = {...state.timeline}
   },
   [types.INIT_ACCOUNT] (state, idStr) {
     state.timeline[idStr] = []
