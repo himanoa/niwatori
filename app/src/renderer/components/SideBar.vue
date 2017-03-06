@@ -7,7 +7,7 @@
         <router-link tag="li" class='el-menu-item' :to="{ name: 'mention', params: { id_str: id } }">Mention</router-link>
       </el-menu-item-group>
     </el-submenu>
-    <el-menu-item id="add-account" index="2"><a href="#" @click="clickedAddoAccount"><i class="el-icon-plus"></i>アカウント追加</a></el-menu-item>
+    <el-menu-item id="add-account" index="2"><a href="#" @click="clickedAddAccount"><i class="el-icon-plus"></i>アカウント追加</a></el-menu-item>
   </el-menu>
 </template>
 <script>
@@ -18,7 +18,7 @@ export default {
     ...mapGetters(['accounts', 'clientIds'])
   },
   methods: {
-    clickedAddoAccount () {
+    clickedAddAccount () {
       console.log('fuga')
       ipcRenderer.send('openOAuthDialog')
     }
