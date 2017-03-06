@@ -1,6 +1,6 @@
 <template>
-  <div v-on:click="CLICKED_TWEET(index)"
-       :style="{'background-color': index === selectedTweet ? '#9dceff' : 'white'}"
+  <div v-on:click="CLICKED_TWEET({index: index, route: route })"
+       :style="{'background-color': index === selectedTweet(route.params.id_str) ? '#9dceff' : 'white'}"
        :class="{ retweeted: tweet['retweeted_status']['text'], tweet: true }">
     <input type="hidden" :value="selectedTweet">
     <input type="hidden" :value="index">
@@ -30,8 +30,8 @@
           </span>
         </el-row>
         <el-row>
-          <tweet-actions v-if="tweet['retweeted_status']['text']" :tweet="tweet['retweeted_status']" :index="index"></tweet-actions>
-          <tweet-actions v-else :tweet="tweet" :index="index"></tweet-actions>
+          <tweet-actions v-if="tweet['retweeted_status']['text']" :route="route" :tweet="tweet['retweeted_status']" :index="index"></tweet-actions>
+          <tweet-actions v-else :route="route" :tweet="tweet" :index="index"></tweet-actions>
         </el-row>
       </el-col>
     </el-row>
@@ -89,7 +89,8 @@ export default {
   },
   props: {
     tweet: Object,
-    index: Number
+    index: Number,
+    route: Object
   },
   components: {
     TweetActions

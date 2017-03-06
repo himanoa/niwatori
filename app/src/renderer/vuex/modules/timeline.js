@@ -13,7 +13,9 @@ const getters = {
     return state.timeline[rootState.route.params.id_str].slice(0, 50).sort((a, b) => new Date(b.created_at) - new Date(a.created_at))
   },
   mentions: (state, getters, rootState) => state.timeline[rootState.route.params.id_str].filter(val => val.in_reply_to_screen_name === val.who),
-  selectedTweet: (state, getters, rootState) => state.selectedTweet[rootState.route.params.id_str],
+  selectedTweet: (state, getters, rootState) => (idStr) => {
+    return state.selectedTweet[idStr]
+  },
   idStrTweetsIndex: (state, getters, rootState) => state.idStrTweetsIndex[rootState.route.params.id_str]
 }
 
@@ -26,17 +28,18 @@ const mutations = {
     }
     state.idStrTweetsIndex[who][tweet['id_str']] = state.timeline.length
   },
-  [types.CLICKED_TWEET] (state, { num }) {
-    state.selectedTweet[state.route.params.id] = num
+  [types.CLICKED_TWEET] (state, { num, route }) {
+    state.selectedTweet[route.params.id_str] = num
+    state.selectedTweet = {...state.selectedTweet}
   },
   [types.DELETE_TWEET] (state, { idStr, who }) {
     console.log('dispatched!')
-    console.log(state.idStrTweetsIndex[state.route.params.id][idStr['idStr']])
-    const index = state.idStrTweetsIndex[state.route.params.id][idStr['idStr']]
+    console.log(state.idStrTweetsIndex[who][idStr['idStr']])
+    const index = state.idStrTweetsIndex[who][idStr['idStr']]
     if (index === undefined) {
       return
     }
-    state.timeline.splice(state.timeline[state.route.params.id].length - index, 1)
+    state.timeline.splice(state.timeline[who].length - index, 1)
   },
   [types.INIT_ACCOUNT] (state, idStr) {
     state.timeline[idStr] = []
@@ -82,7 +85,7 @@ const actions = {
     commit(types.INIT_ACCOUNT, idStr)
   },
   [types.CLICKED_TWEET] ({ commit }, args) {
-    commit(types.CLICKED_TWEET, { num: args.num })
+    commit(types.CLICKED_TWEET, { num: args.index, route: args.route })
   }
 }
 

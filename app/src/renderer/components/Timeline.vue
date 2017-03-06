@@ -2,7 +2,7 @@
 	<div class="timeline">
 		<el-card class="box-card">
       <div class="tweets">
-        <tweet v-for="(tweet, index) in tweets" :tweet="tweet" :index="index"></tweet>
+        <tweet v-for="(tweet, index) in tweets" :tweet="tweet" :index="index" :route="$route"></tweet>
       </div>
 		</el-card>
 	</div>

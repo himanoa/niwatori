@@ -8,8 +8,7 @@ const state = {
 
 const getters = {
   accounts: state => state.clients,
-  clientIds: state => state.clientIds,
-  current: state => state.clients[state.route.params.id]
+  clientIds: state => state.clientIds
 }
 
 const mutations = {
@@ -21,7 +20,7 @@ const mutations = {
     state.clients[client.profile.id_str] = client
     state.clients = {...state.clients}
     state.clientIds.push(client.profile.id_str)
-    state.clientIds = [..clientIds]
+    state.clientIds = [...state.clientIds]
   }
 }
 
@@ -40,9 +39,7 @@ const actions = {
         dispatch(types.DELETE_TWEET, { idStr: data['delete']['status']['id_str'], who: client.profile.idStr })
       })
       stream.on('data', (data) => {
-        if (data['delete']) {
-          console.log('fugafuga')
-        } else if (data['created_at']) {
+        if (data['created_at']) {
           dispatch(types.PUSH_TIMELINE, {tweet: data, who: client.profile.id_str})
         }
       })
