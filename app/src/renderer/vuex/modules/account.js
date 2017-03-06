@@ -1,6 +1,5 @@
 import TwitterApi from '../../api/twitter'
 import * as types from '../mutation-types'
-
 const state = {
   clients: {},
   clientIds: []
@@ -26,7 +25,6 @@ const mutations = {
 
 const actions = {
   async [types.ADD_ACCOUNT] ({ state, dispatch, commit }, {account}) {
-    console.dir(account)
     const client = new TwitterApi.TwitterApi({
       consumerKey: account.consumerKey,
       consumerSecret: account.consumerSecret,

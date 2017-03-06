@@ -87,6 +87,7 @@
     "emojinize": "^1.0.0",
     "flexboxgrid": "^6.3.1",
     "fs-promise": "^2.0.0",
+    "node-unique-array": "0.0.6",
     "twitter": "^1.7.0",
     "url-regex": "^4.0.0",
     "vue-router": "^2.3.0",

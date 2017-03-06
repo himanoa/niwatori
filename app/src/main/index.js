@@ -1,17 +1,19 @@
 'use strict'
 
 import { ipcMain, shell, app, BrowserWindow } from 'electron'
-const storage = require('electron-json-storage')
-const OAuthTwitter = require('electron-oauth-twitter')
+import * as _ from 'lodash'
 
+const storage = require('electron-json-storage')
+const nodeUnique = require('node-unique-array')
 const twitterOAuthKey = {
   key: 'ywUCMm8rXhfKQoCcplDTM8lFW',
   secret: 'hooQ3wY1pg66cLMxqj6LowSlnOlNjapWSWIUD8vI2NOEgf7wKq'
 }
 console.dir(storage)
 function authenticate (callback) {
+  let OAuthTwitter = require('electron-oauth-twitter')
   let twitter = new OAuthTwitter(twitterOAuthKey)
-  twitter.startRequest().then(result => {
+  twitter.startRequest({force_login: true}).then(result => {
     const auth = [{
       consumerKey: twitterOAuthKey.key,
       consumerSecret: twitterOAuthKey.secret,
@@ -24,8 +26,12 @@ function authenticate (callback) {
         resolve(data)
       })
     }).then(data => {
-      storage.set('twitterOAuth', [...data, ...auth], function (err) {
+      const pushed = [...data, ...auth]
+      const unique_array = new nodeUnique(pushed)
+      console.dir(unique_array.get())
+      storage.set('twitterOAuth', unique_array.get(), function (err) {
         if (err) throw err
+        if(pushed.length === unique_array.get().length)
         callback(auth)
       })
     })

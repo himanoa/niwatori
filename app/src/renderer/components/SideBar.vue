@@ -2,7 +2,7 @@
   <el-menu class="el-menu-vertical-demo" theme="dark">
     <el-submenu index="1">
       <template slot="title">アカウント</template>
-      <el-menu-item-group v-for="id in clientIds" title="hugahuga">
+      <el-menu-item-group v-for="id in clientIds" :title="accounts[id].profile.screen_name">
         <router-link tag="li" class='el-menu-item' :to="{ name: 'timeline', params: { id_str: id } }">Home</router-link>
         <router-link tag="li" class='el-menu-item' :to="{ name: 'mention', params: { id_str: id } }">Mention</router-link>
       </el-menu-item-group>
