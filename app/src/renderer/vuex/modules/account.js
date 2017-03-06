@@ -26,6 +26,7 @@ const mutations = {
 
 const actions = {
   async [types.ADD_ACCOUNT] ({ state, dispatch, commit }, {account}) {
+    console.dir(account)
     const client = new TwitterApi.TwitterApi({
       consumerKey: account.consumerKey,
       consumerSecret: account.consumerSecret,

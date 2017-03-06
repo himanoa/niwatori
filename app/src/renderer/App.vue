@@ -25,7 +25,9 @@
   const electron = require('electron')
   const storage = electron.remote.require('electron-json-storage')
   electron.ipcRenderer.on('success-oauth', (event, message) => {
-    store.dispatch(types.ADD_ACCOUNT, { account: message }).catch(err => {
+    console.log('poepoe')
+    console.dir(message)
+    store.dispatch(types.ADD_ACCOUNT, { account: message[0] }).catch(err => {
       console.error(err, err.stack)
     })
   })

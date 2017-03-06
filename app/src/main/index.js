@@ -85,7 +85,7 @@ app.on('activate', () => {
 })
 
 ipcMain.on('openOAuthDialog', (auth) => {
-  authenticate(() => {
+  authenticate((auth) => {
     mainWindow.webContents.send('success-oauth', auth)
   })
 })
