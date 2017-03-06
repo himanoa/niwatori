@@ -3,6 +3,7 @@ import Electron from 'vue-electron'
 import Resource from 'vue-resource'
 import Router from 'vue-router'
 import ElementUI from 'element-ui'
+import Root from './components/Root'
 import TimeLine from './components/TimeLine'
 import Mention from './components/Mention'
 import 'element-ui/lib/theme-default/index.css'
@@ -20,6 +21,10 @@ const router = new Router({
   scrollBehavior: () => ({ y: 0 }),
   routes: [
     {
+      path: '/',
+      component: Root
+    },
+    {
       path: '/timeline/:id_str',
       name: 'timeline',
       component: TimeLine
@@ -31,9 +36,7 @@ const router = new Router({
     }
   ]
 })
-
 sync(store, router)
-console.dir(store)
 /* eslint-disable no-new */
 new Vue({
   store,
