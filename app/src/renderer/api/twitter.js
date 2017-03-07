@@ -9,6 +9,28 @@ class TwitterApi {
       access_token_secret: key.accessTokenSecret
     })
   }
+  getLists(options={}) {
+    const params = {
+      user_id: options.userId || this.profile.id_str,
+      screen_name: options.screenName || undefined,
+      reverse: options.reverse || false,
+    }
+    this.client.get('lists/list', params)
+  }
+  fetchList(options={}) {
+    const params = {
+      list_id: options.listId || undefined,
+      slug: options.slug || undefined,
+      owner_screen_name: options.ownerScreenName || undefined,
+      owner_id: options.ownerId || undefined,
+      since_id: options.sinceId || undefined,
+      count: options.count || 100,
+      max_id: options.maxId || undefined,
+      include_entities: options.includeEntities || true,
+      include_rts: options.includeRts || true,
+    }
+    return this.client.get('list/statuses', params)
+  }
   updateStatus (status) {
     return this.client.post('statuses/update', status)
   }
