@@ -1,10 +1,9 @@
 'use strict'
 
 import { ipcMain, shell, app, BrowserWindow } from 'electron'
-import * as _ from 'lodash'
 
 const storage = require('electron-json-storage')
-const nodeUnique = require('node-unique-array')
+const NodeUnique = require('node-unique-array')
 const twitterOAuthKey = {
   key: 'ywUCMm8rXhfKQoCcplDTM8lFW',
   secret: 'hooQ3wY1pg66cLMxqj6LowSlnOlNjapWSWIUD8vI2NOEgf7wKq'
@@ -27,12 +26,10 @@ function authenticate (callback) {
       })
     }).then(data => {
       const pushed = [...data, ...auth]
-      const unique_array = new nodeUnique(pushed)
-      console.dir(unique_array.get())
-      storage.set('twitterOAuth', unique_array.get(), function (err) {
+      const uniqueArray = new NodeUnique(pushed)
+      storage.set('twitterOAuth', uniqueArray.get(), function (err) {
         if (err) throw err
-        if(pushed.length === unique_array.get().length)
-        callback(auth)
+        if (pushed.length === uniqueArray.get().length) { callback(auth) }
       })
     })
   }).catch(error => new Promise((resolve, reject) => {

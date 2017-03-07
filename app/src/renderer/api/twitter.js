@@ -9,15 +9,15 @@ class TwitterApi {
       access_token_secret: key.accessTokenSecret
     })
   }
-  getLists(options={}) {
+  getLists (options = {}) {
     const params = {
       user_id: options.userId || this.profile.id_str,
       screen_name: options.screenName || undefined,
-      reverse: options.reverse || false,
+      reverse: options.reverse || false
     }
     this.client.get('lists/list', params)
   }
-  fetchList(options={}) {
+  fetchList (options = {}) {
     const params = {
       list_id: options.listId || undefined,
       slug: options.slug || undefined,
@@ -27,7 +27,7 @@ class TwitterApi {
       count: options.count || 100,
       max_id: options.maxId || undefined,
       include_entities: options.includeEntities || true,
-      include_rts: options.includeRts || true,
+      include_rts: options.includeRts || true
     }
     return this.client.get('list/statuses', params)
   }

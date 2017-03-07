@@ -16,3 +16,5 @@ export const ATTACH_CONTENTS = 'ATTACH_CONTENTS'
 export const DELETE_CONTENTS = 'DELETE_CONTENTS'
 
 export const INIT_ACCOUNT = 'INIT_ACCOUNT'
+
+export const PUSH_LIST = 'PUSH_LIST'
