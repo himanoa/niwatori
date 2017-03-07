@@ -33,6 +33,11 @@ const router = new Router({
       path: '/mention/:accountIdStr',
       name: 'mention',
       component: Mention
+    },
+    {
+      path: '/list/:accountIdStr/:listId',
+      name: 'list',
+      component: List
     }
   ]
 })
