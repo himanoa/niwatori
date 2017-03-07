@@ -2,7 +2,7 @@
 	<div class="mentions">
 		<el-card class="box-card">
       <div class="tweets">
-        <tweet v-for="(tweet, index) in mentions" :tweet="tweet" :index="index"></tweet>
+        <tweet v-for="(tweet, index) in mentions" :tweet="tweet" :index="index" :route="$route"></tweet>
       </div>
 		</el-card>
 	</div>
