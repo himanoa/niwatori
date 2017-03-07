@@ -38,6 +38,16 @@
   </tweet>
   </div>
 </template>
+<style>
+p > a {
+  text-decoration: none;
+  color: #1D8CE0;
+}
+p > a:hover {
+  text-decoration: none;
+  color: #20A0FF;
+}
+</style>
 <style scoped>
 .icon {
   max-width: 60.25px;
@@ -62,7 +72,6 @@ p {
   padding-top: 10px;
   border-bottom: 1px solid #C6D2DF;
 }
-
 .attach-image {
   width: 80px;
   height: 80px;
