@@ -1,6 +1,6 @@
 <template>
   <div v-on:click="CLICKED_TWEET({index: index, route: route })"
-       :style="{'background-color': index === selectedTweet(route.params.id_str) ? '#9dceff' : 'white'}"
+       :style="{'background-color': index === selectedTweet(route.params.accountIdStr) ? '#9dceff' : 'white'}"
        :class="{ retweeted: tweet['retweeted_status']['text'], tweet: true }">
     <input type="hidden" :value="selectedTweet">
     <input type="hidden" :value="index">

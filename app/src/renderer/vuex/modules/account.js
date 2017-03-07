@@ -39,7 +39,7 @@ const actions = {
       })
       stream.on('data', (data) => {
         if (data['created_at']) {
-          dispatch(types.PUSH_TIMELINE, {tweet: data, who: client.profile.id_str})
+          dispatch(types.PUSH_TIMELINE, {tweet: data, who: client.profile.id_str, screenName: client.profile.screen_name})
         }
       })
     })

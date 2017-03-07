@@ -25,12 +25,12 @@ const router = new Router({
       component: Root
     },
     {
-      path: '/timeline/:id_str',
+      path: '/timeline/:accountIdStr',
       name: 'timeline',
       component: TimeLine
     },
     {
-      path: '/mention/:id_str',
+      path: '/mention/:accountIdStr',
       name: 'mention',
       component: Mention
     }

@@ -9,14 +9,13 @@ const state = {
 
 const getters = {
   tweets: (state, getters, rootState) => {
-    console.dir(rootState.route.params)
-    return state.timeline[rootState.route.params.id_str].slice(0, 50).sort((a, b) => new Date(b.created_at) - new Date(a.created_at))
+    return state.timeline[rootState.route.params.accountIdStr].slice(0, 50).sort((a, b) => new Date(b.created_at) - new Date(a.created_at))
   },
-  mentions: (state, getters, rootState) => state.timeline[rootState.route.params.id_str].filter(val => val.in_reply_to_screen_name === val.who),
+  mentions: (state, getters, rootState) => state.timeline[rootState.route.params.accountIdStr].filter(val => val.text.match(new RegExp(`@${val.who}`))),
   selectedTweet: (state, getters, rootState) => (idStr) => {
     return state.selectedTweet[idStr]
   },
-  idStrTweetsIndex: (state, getters, rootState) => state.idStrTweetsIndex[rootState.route.params.id_str]
+  idStrTweetsIndex: (state, getters, rootState) => state.idStrTweetsIndex[rootState.route.params.accountIdStr]
 }
 
 const mutations = {
@@ -29,7 +28,7 @@ const mutations = {
     state.idStrTweetsIndex[who][tweet['id_str']] = state.timeline[who].length
   },
   [types.CLICKED_TWEET] (state, { num, route }) {
-    state.selectedTweet[route.params.id_str] = num
+    state.selectedTweet[route.params.accountIdStr] = num
     state.selectedTweet = {...state.selectedTweet}
   },
   [types.DELETE_TWEET] (state, { idStr, who }) {
@@ -75,7 +74,6 @@ const actions = {
       tweet = expandEntities(tweet)
     }
     tweet['retweeted_status'] = tweet['retweeted_status'] || { user: {} }
-    console.dir(tweet)
     commit(types.PUSH_TIMELINE, { tweet: tweet, who: args.who })
   },
   [types.DELETE_TWEET] ({ commit }, args) {

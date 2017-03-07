@@ -55,11 +55,11 @@ const actions = {
   [types.UPDATE_STATUS] ({commit, state, rootState}, args) {
     const param = {
       'status': emojinize.encode(state.input),
-      'in_reply_to_status_id': state.replyTargetTweet || undefined,
+      'in_reply_to_status_id': state.replyTargetTweet.id_str || undefined,
       'media_ids': state.attachContents.map(val => val.id).toString() || undefined
     }
-    console.dir(state.attachContents)
-    rootState.account.clients[rootState.route.params.id_str].updateStatus(param).then(() => {
+    console.dir(param)
+    rootState.account.clients[rootState.route.params.accountIdStr].updateStatus(param).then(() => {
       commit(types.UPDATE_STATUS)
     }).catch(err => {
       console.error(err, err.stack)
@@ -91,7 +91,7 @@ const actions = {
             reject(error, error.stack)
           })
         })).then(result => new Promise((resolve, reject) => {
-          rootState.account.clients[rootState.route.params.id_str].mediaUpload(result['data']).then(data => {
+          rootState.account.clients[rootState.route.params.accountIdStr].mediaUpload(result['data']).then(data => {
             result['id'] = data['media_id_string']
             resolve(result)
           }).catch(error => {

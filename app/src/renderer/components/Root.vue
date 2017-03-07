@@ -13,7 +13,7 @@ export default {
     loaded: function (route) {
       console.log('はげ')
       console.dir(this.clientIds)
-      this.$router.push({ name: 'timeline', params: { id_str: this.clientIds[0] } })
+      this.$router.push({ name: 'timeline', params: { accountIdStr: this.clientIds[0] } })
     }
   }
 }
