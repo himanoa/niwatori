@@ -43,6 +43,7 @@ const actions = {
         }
       })
     })
+    dispatch(types.FETCH_LIST, { account: client })
     commit(types.ADD_ACCOUNT, {client: client})
   },
   [types.FAVORITE] ({ commit, state }, args) {

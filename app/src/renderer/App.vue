@@ -1,10 +1,10 @@
 <template>
   <div id="#app">
     <el-row>
-      <el-col :span="6">
+      <el-col :xs="4" :sm="4" :md="6" :lg="6">
 				<side-bar></side-bar>
       </el-col>
-      <el-col :span="18">
+      <el-col :xs="16" :sm="16" :md="18" :lg="18">
         <el-row class="new">
           <new-tweet class="new"></new-tweet>
         </el-row>

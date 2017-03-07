@@ -18,3 +18,4 @@ export const DELETE_CONTENTS = 'DELETE_CONTENTS'
 export const INIT_ACCOUNT = 'INIT_ACCOUNT'
 
 export const PUSH_LIST = 'PUSH_LIST'
+export const FETCH_LIST = 'FETCH_LIST'

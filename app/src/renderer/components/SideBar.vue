@@ -5,6 +5,10 @@
       <el-menu-item-group v-for="(id, index) in clientIds" :title="accounts[id].profile.screen_name">
         <router-link tag="li" :index="'1-' + (index+1)" class='el-menu-item' :to="{ name: 'timeline', params: { accountIdStr: id } }">Home</router-link>
         <router-link tag="li" :index="'1-' + (index+2)" class='el-menu-item' :to="{ name: 'mention', params: { accountIdStr: id } }">Mention</router-link>
+        <el-submenu :index="'1-' + (index+3)" >
+          <template slot="title">リスト</template>
+          <router-link v-for="list in lists(id)" tag="li" class='el-menu-item' :to="{ name: 'list', params: { accountIdStr: id, listId: list.id_str } }">{{ list.name }}</router-link>
+        </el-submenu>
       </el-menu-item-group>
     </el-submenu>
     <el-menu-item id="add-account" index="2"><a href="#" @click="clickedAddAccount"><i class="el-icon-plus"></i>アカウント追加</a></el-menu-item>
@@ -15,11 +19,10 @@ import { ipcRenderer } from 'electron'
 import { mapGetters } from 'vuex'
 export default {
   computed: {
-    ...mapGetters(['accounts', 'clientIds'])
+    ...mapGetters(['accounts', 'clientIds', 'lists'])
   },
   methods: {
     clickedAddAccount () {
-      console.log('fuga')
       ipcRenderer.send('openOAuthDialog')
     }
   }
@@ -30,6 +33,7 @@ export default {
   color: #d1dbe5;
 }
 .el-menu {
+  overflow-y: scroll;
   height: 100%;
 }
 a {

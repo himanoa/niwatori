@@ -15,7 +15,7 @@ class TwitterApi {
       screen_name: options.screenName || undefined,
       reverse: options.reverse || false
     }
-    this.client.get('lists/list', params)
+    return this.client.get('lists/list', params)
   }
   fetchList (options = {}) {
     const params = {
