@@ -1,7 +1,7 @@
 <template>
   <div id="#app">
     <el-row>
-      <el-col :xs="4" :sm="4" :md="6" :lg="6">
+      <el-col :xs="8" :sm="8" :md="6" :lg="6">
 				<side-bar></side-bar>
       </el-col>
       <el-col :xs="16" :sm="16" :md="18" :lg="18">

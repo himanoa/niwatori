@@ -31,7 +31,6 @@ export default {
   height: 30px;
 }
 .el-menu-item-group__title {
-  color: #13CE66;
   font-weight: bolder;
   padding-top: 7.5px;
   padding-bottom: 7.5px;
