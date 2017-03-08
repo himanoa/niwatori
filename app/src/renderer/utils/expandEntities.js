@@ -13,6 +13,6 @@ export function expandEntities (tweet) {
   tweet['text'] = xssFilters.inHTMLData(tweet['text'])
      .replace(urlRegex(), "<a href='$&' target='_blank'>$&</a>")
      .replace(/@([a-zA-Z0-9_]{1,15})/, "<a href='https://twitter.com/$1' target='_blank'>$&</a>")
-     .replace(/#([^!"$#%&'()*+\-.,/:;<=>?@[\\\]^`{|}~]+)/, "<a href='https://twitter.com/hashtag/$1' target='_blank'>$&</a>")
+     .replace(/#([^!"$#%&'()*+\-.,/:;<=>?@[\\\]^`{|}~\s　]+)/, "<a href='https://twitter.com/hashtag/$1' target='_blank'>$&</a>") // eslint-disable-line no-irregular-whitespace
   return tweet
 }
