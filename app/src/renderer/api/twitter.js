@@ -29,7 +29,7 @@ class TwitterApi {
       include_entities: options.includeEntities || true,
       include_rts: options.includeRts || true
     }
-    return this.client.get('list/statuses', params)
+    return this.client.get('lists/statuses', params)
   }
   updateStatus (status) {
     return this.client.post('statuses/update', status)
