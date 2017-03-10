@@ -25,7 +25,7 @@
   import store from 'renderer/vuex/store'
   import * as types from 'renderer/vuex/mutation-types'
   const electron = require('electron')
-  const storage = electron.remote.require('electron-json-storage')
+  const storage = require('electron-json-storage')
   electron.ipcRenderer.on('success-oauth', (event, message) => {
     console.log('poepoe')
     console.dir(message)

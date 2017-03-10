@@ -2,6 +2,7 @@
 
 import { ipcMain, shell, app, BrowserWindow } from 'electron'
 
+require('electron-debug')({ showDevTools: true })
 const storage = require('electron-json-storage')
 const NodeUnique = require('node-unique-array')
 const twitterOAuthKey = {
@@ -60,7 +61,7 @@ function createWindow () {
     height: 600,
     width: 800
   })
-
+  mainWindow.toggleDevTools()
   mainWindow.loadURL(winURL)
 
   mainWindow.webContents.on('new-window', (event, url) => {
