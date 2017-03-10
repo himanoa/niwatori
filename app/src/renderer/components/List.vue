@@ -2,11 +2,11 @@
   <div class="list">
     <el-card class="box-card">
       <div slot="header" class="clearfix">
-        <span style="line-height: 36px;">{{ idToName[$route.params.listId] }}</span>
+        <span style="line-height: 36px;">{{ idToName[$route.params.listId]}}</span>
         <span><el-button type="primary" @click="fetchTweets()">更新</el-button></span>
       </div>
       <div class="tweets">
-        <tweet v-for="(tweet, index) in currentListTweets" :tweet="tweet" :index="index" :route="$route"></tweet>
+        <tweet v-for="(tweet, index) in currentListTweet" :tweet="tweet" :index="index" :route="$route"></tweet>
       </div>
 		</el-card>
 	</div>
@@ -27,7 +27,7 @@ import { mapGetters } from 'vuex'
 export default {
   computed: {
     ...mapGetters(['accounts', 'idToName']),
-    currentListTweets: function () {
+    currentListTweet: function () {
       return this.tweets.filter(val => val.receivedListId === this.$route.params.listId)
     }
   },

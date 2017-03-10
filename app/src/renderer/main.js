@@ -7,6 +7,7 @@ import Root from './components/Root'
 import TimeLine from './components/TimeLine'
 import Mention from './components/Mention'
 import List from './components/List'
+import Search from './components/Search'
 import 'element-ui/lib/theme-default/index.css'
 import store from 'renderer/vuex/store'
 import { sync } from 'vuex-router-sync'
@@ -39,6 +40,11 @@ const router = new Router({
       path: '/list/:accountIdStr/:listId',
       name: 'list',
       component: List
+    },
+    {
+      path: '/search/:accountIdStr/:index',
+      name: 'search',
+      component: Search
     }
   ]
 })

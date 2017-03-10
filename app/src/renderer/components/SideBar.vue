@@ -9,7 +9,8 @@
       </el-submenu>
       <el-submenu :index="'1-' + (index+4)">
         <template slot="title">検索</template>
-        <el-menu-item index="2"><a href="#" @click="CHANGE_VISIABLE_DIALOG"><i class="el-icon-search"></i>検索</a></el-menu-item>
+        <el-menu-item index="2"><a href="#" @click="CHANGE_VISIABLE_DIALOG(id)"><i class="el-icon-search"></i>検索</a></el-menu-item>
+        <router-link v-for="(search,index) in searchs(id)" tag="li" class='el-menu-item child' :to="{ name: 'search', params: { accountIdStr: id, index: index } }">{{ search.name }}</router-link>
       </el-submenu>
     </el-menu-item-group>
     <el-menu-item id="add-account" index="2"><a href="#" @click="clickedAddAccount"><i class="el-icon-plus"></i>アカウント追加</a></el-menu-item>
@@ -21,7 +22,7 @@ import { ipcRenderer } from 'electron'
 import { mapGetters, mapActions } from 'vuex'
 export default {
   computed: {
-    ...mapGetters(['accounts', 'clientIds', 'lists'])
+    ...mapGetters(['accounts', 'clientIds', 'lists', 'searchs'])
   },
   methods: {
     ...mapActions([types.CHANGE_VISIABLE_DIALOG]),

@@ -7,12 +7,12 @@
         <span>検索の追加</span>
       </header>
       <div class="form">
-        <el-form ref="formData" label-width="60px":model="formData">
+        <el-form label-width="60px">
           <el-form-item label="名前">
-            <el-input v-model="formData.name"></el-input>
+            <el-input :value="name" @input.self=updateName></el-input>
           </el-form-item>
           <el-form-item label="クエリ">
-            <el-input v-model="formData.query"></el-input>
+            <el-input :value="query" @input.self=updateQuery></el-input>
           </el-form-item>
           <el-form-item>
             <el-button type="primary" @click="onSubmit">追加</el-button>
@@ -29,10 +29,8 @@ import { mapGetters, mapActions } from 'vuex'
 export default {
   data () {
     return {
-      formData: {
-        name: '',
-        query: ''
-      }
+      name: '',
+      query: ''
     }
   },
   computed: {
@@ -40,9 +38,15 @@ export default {
   },
   methods: {
     ...mapActions([types.ADD_SEARCH, types.CHANGE_VISIABLE_DIALOG]),
-    onSubmit: function () {
-      this.ADD_SEARCH({name: this.formData.name, query: this.formData.query})
-      this.CHANGE_VISIABLE_DIALOG()
+    onSubmit () {
+      this.$store.dispatch('ADD_SEARCH', {name: this.name, query: this.query})
+      this.$store.dispatch('CHANGE_VISIABLE_DIALOG')
+    },
+    updateName (name) {
+      this.name = name
+    },
+    updateQuery (query) {
+      this.query = query
     }
   }
 }
