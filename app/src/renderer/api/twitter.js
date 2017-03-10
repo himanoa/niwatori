@@ -17,6 +17,19 @@ class TwitterApi {
     }
     return this.client.get('lists/list', params)
   }
+  fetchSearch (options = {}) {
+    const params = {
+      q: options.q || undefined,
+      geocode: options.geocode || undefined,
+      lang: options.lang || undefined,
+      result_type: options.type || 'recent',
+      count: options.count || 100,
+      until: options.until || undefined,
+      since_id: options.sinceId || undefined,
+      include_entities: options.includeEntities || true
+    }
+    return this.client.get('search/tweets', params)
+  }
   fetchList (options = {}) {
     const params = {
       list_id: options.listId || undefined,
