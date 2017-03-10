@@ -9,20 +9,22 @@
       </el-submenu>
       <el-submenu :index="'1-' + (index+4)">
         <template slot="title">検索</template>
-        <el-menu-item index="2"><a href="#"><i class="el-icon-search"></i>検索</a></el-menu-item>
+        <el-menu-item index="2"><a href="#" @click="CHANGE_VISIABLE_DIALOG"><i class="el-icon-search"></i>検索</a></el-menu-item>
       </el-submenu>
     </el-menu-item-group>
     <el-menu-item id="add-account" index="2"><a href="#" @click="clickedAddAccount"><i class="el-icon-plus"></i>アカウント追加</a></el-menu-item>
   </el-menu>
 </template>
 <script>
+import * as types from '../vuex/mutation-types'
 import { ipcRenderer } from 'electron'
-import { mapGetters } from 'vuex'
+import { mapGetters, mapActions } from 'vuex'
 export default {
   computed: {
     ...mapGetters(['accounts', 'clientIds', 'lists'])
   },
   methods: {
+    ...mapActions([types.CHANGE_VISIABLE_DIALOG]),
     clickedAddAccount () {
       ipcRenderer.send('openOAuthDialog')
     }

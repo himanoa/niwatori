@@ -10,6 +10,7 @@
         </el-row>
         <el-row class="timeline">
           <router-view></router-view>
+          <search-dialog></search-dialog>
         </el-row>
       </el-col>
     </el-row>
@@ -17,6 +18,7 @@
 </template>
 
 <script>
+  import SearchDialog from 'renderer/components/SearchDialog'
   import TimeLine from 'renderer/components/TimeLine'
   import SideBar from 'renderer/components/SideBar'
   import NewTweet from 'renderer/components/NewTweet'
@@ -49,6 +51,7 @@
   login()
   export default {
     components: {
+      SearchDialog,
       NewTweet,
       TimeLine,
       SideBar

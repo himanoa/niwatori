@@ -10,6 +10,7 @@ const mutations = {
     state.searchs.push({name: name, query: query})
   },
   [types.CHANGE_VISIABLE_DIALOG] (state) {
+    console.log(state.isVisiableDialog)
     state.isVisiableDialog = !state.isVisiableDialog
   }
 }
