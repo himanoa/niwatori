@@ -7,9 +7,9 @@
         <template slot="title">リスト</template>
         <router-link v-for="list in lists(id)" tag="li" class='el-menu-item child' :to="{ name: 'list', params: { accountIdStr: id, listId: list.id_str } }">{{ list.name }}</router-link>
       </el-submenu>
-      <el-submenu :index="'1-' + (index+4)">
+      <el-submenu :index="'1-' + (index+5)">
         <template slot="title">検索</template>
-        <el-menu-item index="2"><a href="#" @click="CHANGE_VISIABLE_DIALOG(id)"><i class="el-icon-search"></i>検索</a></el-menu-item>
+        <el-menu-item index="'1-' + (index+5)+ '-' + 2"><a href="#" @click="CHANGE_VISIABLE_DIALOG(id)"><i class="el-icon-search"></i>検索</a></el-menu-item>
         <router-link v-for="(search,index) in searchs(id)" tag="li" class='el-menu-item child' :to="{ name: 'search', params: { accountIdStr: id, index: index } }">{{ search.name }}</router-link>
       </el-submenu>
     </el-menu-item-group>
