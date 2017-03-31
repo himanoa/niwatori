@@ -2,20 +2,21 @@
   "comments": false,
   "env": {
     "testing-unit": {
-      "presets": ["latest"],
+      "presets": ["es2015", "stage-0"],
       "plugins": ["istanbul"]
     },
     "testing-e2e": {
-      "presets": ["latest"]
+      "presets": ["es2015", "stage-0"]
     },
     "main": {
-      "presets": ["latest"]
+      "presets": ["es2015", "stage-0"]
     },
     "renderer": {
       "presets": [
-        ["latest", "uglify:after"],
+        ["es2015", { "modules": false }],
+        "stage-0"
       ]
     }
   },
-  "plugins": ["transform-runtime", "transform-object-rest-spread"]
+  "plugins": ["transform-runtime"]
 }

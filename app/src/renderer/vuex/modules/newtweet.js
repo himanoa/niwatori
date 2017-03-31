@@ -1,8 +1,8 @@
 const electron = require('electron')
 const {dialog} = electron.remote
-const readFile = require('fs').readFile
+const { readFile } = electron.remote.require('fs-promise')
 import * as types from '../mutation-types'
-import urlRegex from 'url-regex'
+import * as urlRegex from 'url-regex'
 import emojinize from 'emojinize'
 
 const state = {
@@ -84,12 +84,7 @@ const actions = {
           const extension = file.split('.').pop()
           resolve({path: file, extension: extension})
         }).then(result => new Promise((resolve, reject) => {
-          new Promise((resolve, reject) => {
-            readFile(file, (err, data) => {
-              if (err) reject(err)
-              resolve(data)
-            })
-          }).then(data => {
+          readFile(file).then(data => {
             result['data'] = data
             resolve(result)
           }).catch(error => {
