@@ -4,7 +4,7 @@
       <el-input :value="input" @input.self="UPDATE_INPUT" type="textarea" :row="4" placeholder="今何してる？"></el-input>
     </el-row>
     <el-row>
-      <el-button type='primary' v-on:click="ATTACH_CONTENTS" icon="picture"></el-button>
+      <el-button v-on:click="ATTACH_CONTENTS" icon="picture"></el-button>
       <el-button type="primary" v-on:click="UPDATE_STATUS">ツイート</el-button>
       <span>{{ inputLength }}</span>
     </el-row>
