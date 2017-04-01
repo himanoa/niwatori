@@ -19,7 +19,7 @@
 
 <script>
   import SearchDialog from 'renderer/components/SearchDialog'
-  import TimeLine from 'renderer/components/TimeLine'
+  import TimeLine from 'renderer/components/Timeline'
   import SideBar from 'renderer/components/SideBar'
   import NewTweet from 'renderer/components/NewTweet'
   import store from 'renderer/vuex/store'

@@ -12,3 +12,6 @@ thumbs.db
 !.gitkeep
 .tern-project
 .npmrc
+.tern-port
+yarn.lock
+~

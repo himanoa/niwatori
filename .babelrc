@@ -2,21 +2,20 @@
   "comments": false,
   "env": {
     "testing-unit": {
-      "presets": ["es2015", "stage-0"],
+      "presets": ["env"],
       "plugins": ["istanbul"]
     },
     "testing-e2e": {
-      "presets": ["es2015", "stage-0"]
+      "presets": ["env"]
     },
     "main": {
-      "presets": ["es2015", "stage-0"]
+      "presets": ["env"]
     },
     "renderer": {
       "presets": [
-        ["es2015", { "modules": false }],
-        "stage-0"
+        ["env", { "modules": false, "targets": { "electron": 1.6 }  }],
       ]
     }
   },
-  "plugins": ["transform-runtime"]
+  "plugins": ["transform-object-rest-spread"]
 }

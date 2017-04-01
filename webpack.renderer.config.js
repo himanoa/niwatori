@@ -6,10 +6,9 @@ const path = require('path')
 const pkg = require('./app/package.json')
 const settings = require('./config.js')
 const webpack = require('webpack')
-
+new webpack.IgnorePlugin(/regenerator|nodent|js\-beautify/, /ajv/)
 const ExtractTextPlugin = require('extract-text-webpack-plugin')
 const HtmlWebpackPlugin = require('html-webpack-plugin')
-
 let rendererConfig = {
   devtool: '#eval-source-map',
   entry: {
@@ -20,38 +19,32 @@ let rendererConfig = {
     rules: [
       {
         test: /\.css$/,
-        loader: ExtractTextPlugin.extract({
-          fallbackLoader: 'style-loader',
-          loader: 'css-loader'
+        use: ExtractTextPlugin.extract({
+          fallback: 'style-loader',
+          use: 'css-loader'
         })
       },
       {
         test: /\.html$/,
-        loader: 'vue-html-loader'
+        use: 'vue-html-loader'
       },
       {
         test: /\.js$/,
-        loader: 'babel-loader',
+        use: 'babel-loader',
         include: [ path.resolve(__dirname, 'app/src/renderer') ],
         exclude: /node_modules/
       },
       {
         test: /\.json$/,
-        loader: 'json-loader'
+        use: 'json-loader'
       },
       {
         test: /\.node$/,
-        loader: 'node-loader'
+        use: 'node-loader'
       },
       {
         test: /\.vue$/,
         loader: 'vue-loader',
-        options: {
-          loaders: {
-            sass: 'vue-style-loader!css-loader!sass-loader?indentedSyntax=1',
-            scss: 'vue-style-loader!css-loader!sass-loader'
-          }
-        }
       },
       {
         test: /\.(png|jpe?g|gif|svg)(\?.*)?$/,
